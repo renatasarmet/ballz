@@ -33,23 +33,24 @@ using namespace std;
 class jogo
 {
 public:
-    static void Start(braco *hook, Plano* plano);
+    static void Start(Plano* plano, braco* hook);
     static void CriandoTudo();
-    static void JogarNovamente(braco *hook, Plano* plano);
+    static void JogarNovamente(  Plano* plano, braco* hook);
+	static void novo_lancamento();
     
 private:
     static bool IsExiting();
-    static void loop_jogo(braco *hook, Plano* plano);
+    static void loop_jogo(  Plano* plano, braco* hook);
     
     static void mostrar_tela_inicial();
     static void mostrar_menu();
 	static void mostrar_instrucao();
-    static void mostrar_ganhou(braco *hook, Plano* plano);
-    static void mostrar_perdeu(braco *hook, Plano* plano);
+    static void mostrar_ganhou(  Plano* plano, braco* hook);
+    static void mostrar_perdeu(  Plano* plano, braco* hook);
   
     static bool VerificaGanhou();
     //static bool verifica_passou();
-   //static void verifica_colisao(braco*, Plano* plano);
+   //static void verifica_colisao(Plano* plano, braco* hook);
     
     enum GameState {
         Inicializado, Mostrando_Tela_Inicial, Pausado, Mostrando_Menu, Jogando, Saindo, Ganhando, Perdendo, Mostrando_Instrucao, Mostrando_Transicao_Passou, Mostrando_Transicao_Horcrux, Nova_Fase, Fase_Final
@@ -62,5 +63,7 @@ private:
     static sf::Text nivelText;
     static sf::Text totalText;
     static sf::Text metaText;
+	static pokeball pokebola;
+
 };
 #endif // !JOGO_H

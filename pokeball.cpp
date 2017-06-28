@@ -16,8 +16,8 @@ void pokeball::Update(float elapsedTime)
 
 	float moveAmount = _velocity * elapsedTime;
 
-	float moveByX = (10 * sin(dir)) * moveAmount;
-	float moveByY =  (10 * cos(dir)) * moveAmount;
+	float moveByX = (10 * cos(dir)) * moveAmount;
+	float moveByY = (10 * sin(dir)) * moveAmount;
 
 	if (_sprite.getPosition().x + moveByX <= 0 + (_sprite.getLocalBounds().width) / 2 || _sprite.getPosition().x + (_sprite.getLocalBounds().height) / 2 + moveByX >= 450
 		|| _sprite.getPosition().y + moveByY <= 0 + (_sprite.getLocalBounds().height) / 2 || _sprite.getPosition().y + (_sprite.getLocalBounds().width) / 2 + moveByY >= 600)
@@ -32,7 +32,7 @@ void pokeball::pokebola()
 	{
 		_imagem.loadFromFile("imagens/pokebola.png");
 		_sprite.setTexture(_imagem);
-		_sprite.setPosition(10 * cos(dir) + 230, 10 * sin(dir) + 490);
+		_sprite.setPosition(10 * cos(dir) + 225, 10 * sin(dir) + 50);
 	}
 }
 

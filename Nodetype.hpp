@@ -21,8 +21,8 @@ public:
 	~Nodetype();
 
 	//FUNCOES
-//	virtual void carregar(std::string nomearquivo);
-//	virtual void desenhar(sf::RenderWindow& renderWindow);
+	virtual void carregar(std::string nomearquivo);
+	virtual void desenhar(sf::RenderWindow& renderWindow);
 //	virtual bool colidiu(feitico& _feitico, Plano *plano);
 
 	float get_x() const;
@@ -45,16 +45,16 @@ public:
 	void set_valor(int);
 	int get_valor() const;
 
-//	sf::Sprite _sprite;
+	sf::Sprite _sprite;
 
 private:
 	Nodetype *next;
 	int id;
 	int valor;
 	//string info;
-//	bool carregou;
-//	sf::Texture _imagem;
-	//std::string nome_arquivo;
+	bool carregou;
+	sf::Texture _imagem;
+	std::string nome_arquivo;
 	float x, y; // vai ter q apagar o x e y depois
 };
 
@@ -72,26 +72,27 @@ Nodetype::~Nodetype(){
 	//cout << "GAME OVER NO DESTRUTOR DO ID = " << get_id() <<endl;
 }
 
-//void Nodetype::carregar(std::string nomearquivo)
-//{
-//	if (_imagem.loadFromFile(nomearquivo) == false)
-//	{
-//		nome_arquivo = "";
-//		carregou = false;
-//	}
-//	else
-//	{
-//		nome_arquivo = nomearquivo;
-//		_sprite.setTexture(_imagem);
-//		carregou = true;
-//	}
-//}
+void Nodetype::carregar(std::string nomearquivo)
+{
+	if (_imagem.loadFromFile(nomearquivo) == false)
+	{
+		nome_arquivo = "";
+		carregou = false;
+	}
+	else
+	{
+		nome_arquivo = nomearquivo;
+		_sprite.setTexture(_imagem);
+		_sprite.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
+		carregou = true;
+	}
+}
 
-//void Nodetype::desenhar(sf::RenderWindow & renderWindow)
-//{
-//    if (carregou)
-//		renderWindow.draw(_sprite);
-//}
+void Nodetype::desenhar(sf::RenderWindow & renderWindow)
+{
+    if (carregou)
+		renderWindow.draw(_sprite);
+}
 
 //bool Nodetype::colidiu(feitico& _feitico, Plano *plano)
 //{
@@ -116,23 +117,24 @@ Nodetype::~Nodetype(){
 
 float Nodetype::get_x() const
 {
-	//return _sprite.getPosition().x;
-	return x;
+	return _sprite.getPosition().x;
+	//return x;
 }
 
  float Nodetype::get_y() const
 {
-	//return _sprite.getPosition().y;
-	 return y;
+	return _sprite.getPosition().y;
+	// return y;
 }
 
 void Nodetype::set_posicao(float _x, float _y)
 {
-//	if (carregou)
-//		_sprite.setPosition(x, y);
-
-	this->x = _x;
-	this->y = _y;
+	if (carregou)
+	{
+		_sprite.setPosition(_x, _y);
+	}
+	//this->x = _x;
+	//this->y = _y;
 
 	//ESSA PARTE VAI SER ALTERADA NA PARTE GRAFICA
 }

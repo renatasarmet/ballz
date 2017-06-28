@@ -5,7 +5,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <math.h>
- 
+
 
 using namespace std;
 

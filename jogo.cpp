@@ -10,11 +10,12 @@ sf::Sprite jogo::background;
 bool pokeball::lancado = false;
 braco::estado_braco braco::_estado_braco = Rotacionando;
 double pokeball::dir = 0;
+pokeball jogo::pokebola;
 
 
 // pokeball AINDA SENDO LANCADO NA TRANSICAO
 
-void jogo::Start(braco* hook, Plano* plano)
+void jogo::Start( Plano* plano, braco* hook)
 {
     sf::Texture imagem;
     imagem.loadFromFile("imagens/fundo.jpg");
@@ -22,15 +23,17 @@ void jogo::Start(braco* hook, Plano* plano)
     
     //Resetando as listas
     plano->DeletaTudo();
+
+	//pokebola.set_posicao(225, 50);
     
-    //plano->InsereNplano(20, todosItens, itensGanhar); // INICIALIZANDO O PLANO
+    plano->InsereNplano(7); // INICIALIZANDO O PLANO
     
     
    /* estado_jogo = jogo::Mostrando_Tela_Inicial;*/
 
     while (!IsExiting())
     {
-        loop_jogo(hook, plano);
+        loop_jogo(plano, hook);
     }
     
     janela.close();
@@ -38,23 +41,34 @@ void jogo::Start(braco* hook, Plano* plano)
 
 void jogo::CriandoTudo()
 {
-	janela.create(sf::VideoMode(450, 600), "Harry Potter e a Lista Sequencial", sf::Style::Close); //DEFINE TAMANHO DA JANELA, O QUE APARECE NO CABEÇALHO E FUNCOES DISPONIVEIS (FECHAR, RESIZE, MINIMIZAR)
- 
-    braco *hook = new braco();
+	janela.create(sf::VideoMode(450, 600), "PokeBallz", sf::Style::Close); //DEFINE TAMANHO DA JANELA, O QUE APARECE NO CABEÇALHO E FUNCOES DISPONIVEIS (FECHAR, RESIZE, MINIMIZAR)
    
     Plano plano;
+	braco hook;
    
 	estado_jogo = jogo::Mostrando_Tela_Inicial;
-    jogo::Start(hook, &plano);
+    jogo::Start(&plano, &hook);
 
+	srand(time(NULL));
 }
 
 // LEMBRAR DE SETTAR O pokeball PARA NAO LANCADO
 
-void jogo::JogarNovamente(braco* hook, Plano* plano)
+void jogo::JogarNovamente(Plano* plano, braco* hook)
 {
 	estado_jogo = jogo::Jogando;
-	jogo::Start(hook, plano);
+	jogo::Start(plano, hook);
+}
+
+void jogo::novo_lancamento()
+{
+	if (pokeball::lancado == false)
+		cout << "inutil" << endl;
+		//faz tudo
+
+
+	//volta pra origem
+//	pokebola.set_posicao(225, 50);
 }
                                     
 bool jogo::IsExiting()
@@ -65,7 +79,7 @@ bool jogo::IsExiting()
         return false;
 }
 
-void jogo::loop_jogo(braco* hook, Plano* plano)
+void jogo::loop_jogo( Plano* plano, braco* hook)
 {
     switch (estado_jogo)
     {
@@ -86,12 +100,12 @@ void jogo::loop_jogo(braco* hook, Plano* plano)
         }
         case jogo::Ganhando:
         {
-            mostrar_ganhou(hook, plano);
+            mostrar_ganhou(plano, hook);
             break;
         }
         case jogo::Perdendo:
         {
-            mostrar_perdeu(hook, plano);
+            mostrar_perdeu(plano, hook);
             break;
         }
         case jogo::Jogando:
@@ -102,14 +116,15 @@ void jogo::loop_jogo(braco* hook, Plano* plano)
             
             imagem1.loadFromFile("imagens/pausar.png");
             botao_pausar.setTexture(imagem1);
-            botao_pausar.setPosition(335, 13);
+            botao_pausar.setPosition(335, 3);
 
-            //verifica_colisao(hook, plano);
-            
+            //verifica_colisao(plano, hook);
+
             janela.clear();
             janela.draw(background);
             hook->desenhar(janela);
             hook->update_todos();
+			pokebola.desenhar(janela);
             plano->desenha_todos_plano(janela);
             janela.draw(botao_pausar);
 			janela.display();
@@ -124,21 +139,32 @@ void jogo::loop_jogo(braco* hook, Plano* plano)
                     case sf::Event::KeyPressed:
                         if (evento_atual.key.code == sf::Keyboard::Escape)
 							estado_jogo = jogo::Mostrando_Menu;
-                        else if(evento_atual.key.code == sf::Keyboard::F && pokeball::lancado == false)
-						{
-                            braco::_estado_braco = braco::Pokebola_Lancada;
-                            pokeball::dir = (hook->get_rotacao() + 90)*0.0174532925;
-                        }
+      //                  else if(evento_atual.key.code == sf::Keyboard::F )
+						//{
+						//	pokebola.set_posicao(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y);
+      //                      braco::_estado_braco = braco::Pokebola_Lancada;
+      //                      pokeball::dir = (hook->get_rotacao() + 90)*0.0174532925;
+      //                  }
                         break;
                     case sf::Event::MouseButtonPressed:
-                        if (evento_atual.mouseButton.button == sf::Mouse::Left)
+                        if (evento_atual.mouseButton.button == sf::Mouse::Left && pokeball::lancado == false)
                             if (botao_pausar.getGlobalBounds().contains(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y))
                             {                                
 								estado_jogo = jogo::Mostrando_Menu;
                             }
+
+							else
+							{
+//								pokebola.set_posicao(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y);
+								braco::_estado_braco = braco::Pokebola_Lancada;
+								pokeball::dir = (hook->get_rotacao() + 90)*0.0174532925;
+								plano->InsereNplano(10);
+							}
 						break;
+					case sf::Event::MouseButtonReleased:
+						novo_lancamento();
 					case sf::Event::MouseMoved:
-						hook->update(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y);
+						//hook->update(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y);
                     default:
                         break;
                 }
@@ -155,7 +181,7 @@ void jogo::mostrar_tela_inicial()
     estado_jogo = jogo::Mostrando_Menu;
 }
 
-void jogo::mostrar_ganhou(braco *hook, Plano* plano)
+void jogo::mostrar_ganhou(  Plano* plano, braco* hook)
 {
     Ganhou ganhou;
     Ganhou::ganhou resultado = ganhou.Mostrar(janela);
@@ -165,12 +191,12 @@ void jogo::mostrar_ganhou(braco *hook, Plano* plano)
             estado_jogo = jogo::Saindo;
             break;
         case Ganhou::Jogar_Novamente:
-            jogo::JogarNovamente(hook, plano);
+            jogo::JogarNovamente(plano, hook);
             break;
     }
 }
 
-void jogo::mostrar_perdeu(braco *hook, Plano* plano)
+void jogo::mostrar_perdeu(  Plano* plano, braco* hook)
 {
     Perdeu perdeu;
     Perdeu::perdeu resultado = perdeu.Mostrar(janela);
@@ -180,7 +206,7 @@ void jogo::mostrar_perdeu(braco *hook, Plano* plano)
             estado_jogo = jogo::Saindo;
             break;
         case Perdeu::Jogar_Novamente:
-            jogo::JogarNovamente(hook, plano);
+            jogo::JogarNovamente(plano, hook);
             break;
     }
 }
@@ -206,7 +232,7 @@ bool jogo::VerificaGanhou()
 //    return false;
 //}
 
-//void jogo::verifica_colisao(braco* hook, Plano* plano)
+//void jogo::verifica_colisao( Plano* plano, braco* hook)
 //{
 //    Nodetype *Paux;
 //    bool ok = false;
