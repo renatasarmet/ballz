@@ -93,6 +93,13 @@ int main()
 
     cout << "Quantidade de elementos plano de novo de novo de novo: " << plano.QuantidadeElementos() << endl;
 
+    rodadaAtual +=1;
+
+    cout << "Removendo tudo... " << endl;
+
+    plano.DeletaTudo();
+
+    plano.ExibeLista();
 
     return 0;
 }

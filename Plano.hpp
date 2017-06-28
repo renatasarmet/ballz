@@ -45,8 +45,9 @@ void Plano::InsereNplano(int rodadaAtual)
     while(no != NULL){
     	no->set_posicao(no->get_x(),no->get_y()+1); // NAO SERA 1 DE VERDADE, TEM Q VER OS PIXELS.. MAS QUEREMOS DESCER PARA A PROXIMA LINHA
     	if(no->get_y()==LIMITE_PLANO){
-    		ProcuraRemove(no->get_id(), DeuCerto); // ISSO SERA SUBSTITUIDO DEPOIS PELO GAME OVER
-    		// GAME OVER AQUI .. IMPLEMENTAR
+    		DeletaTudo();
+    		//IMPLEMENTAR GRAFICAMENTE: DIZER AO USUARIO QUE O JOGO ACABOU
+
     	}
     	no = no->get_next();
     }

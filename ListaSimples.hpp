@@ -62,12 +62,16 @@ bool ListaSimples::Vazia(){
 void ListaSimples::ExibeLista(){
 	Nodetype *Paux;
 	Paux = P;
-	while(Paux!=NULL){
-		cout<<"ID: "<<Paux->get_id();
-		cout << " ,Valor: " << Paux->get_valor() ;
-		cout << " ,X: " << Paux->get_x();
-		cout << " ,Y: " << Paux->get_y() <<endl;
-		Paux = Paux->get_next();
+	if(Paux!=NULL){
+		while(Paux!=NULL){
+			cout<<"ID: "<<Paux->get_id();
+			cout << " ,Valor: " << Paux->get_valor() ;
+			cout << " ,X: " << Paux->get_x();
+			cout << " ,Y: " << Paux->get_y() <<endl;
+			Paux = Paux->get_next();
+		}
+	}else{
+		cout<<"Nao ha elementos"<<endl;
 	}
 
 }

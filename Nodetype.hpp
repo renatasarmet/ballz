@@ -23,7 +23,7 @@ public:
 	//FUNCOES
 //	virtual void carregar(std::string nomearquivo);
 //	virtual void desenhar(sf::RenderWindow& renderWindow);
-//	virtual bool colidiu(feitico& _feitico);
+//	virtual bool colidiu(feitico& _feitico, Plano *plano);
 
 	float get_x() const;
 	float get_y() const;
@@ -93,18 +93,23 @@ Nodetype::~Nodetype(){
 //		renderWindow.draw(_sprite);
 //}
 
-//bool Nodetype::colidiu(feitico& _feitico)
+//bool Nodetype::colidiu(feitico& _feitico, Plano *plano)
 //{
+//	bool deucerto;
 //	if (_feitico.lancado == true)
 //	{
-//		if(_sprite.getPosition().x - _sprite.getLocalBounds().width/2 <= _feitico.get_bounding_rect().left + _feitico.get_bounding_rect().width
-//			&& _sprite.getPosition().x + _sprite.getLocalBounds().width / 2  >= _feitico.get_bounding_rect().left
-//			&& _sprite.getPosition().y - _sprite.getLocalBounds().height / 2 <= _feitico.get_bounding_rect().top + _feitico.get_bounding_rect().height
-//			&& _sprite.getPosition().y + _sprite.getLocalBounds().height / 2 >= _feitico.get_bounding_rect().top )
-//		{
+////		if(_sprite.getPosition().x - _sprite.getLocalBounds().width/2 <= _feitico.get_bounding_rect().left + _feitico.get_bounding_rect().width
+////			&& _sprite.getPosition().x + _sprite.getLocalBounds().width / 2  >= _feitico.get_bounding_rect().left
+////			&& _sprite.getPosition().y - _sprite.getLocalBounds().height / 2 <= _feitico.get_bounding_rect().top + _feitico.get_bounding_rect().height
+////			&& _sprite.getPosition().y + _sprite.getLocalBounds().height / 2 >= _feitico.get_bounding_rect().top )
+////		{
+//			if(get_valor()==1){
+//				plano->ProcuraRemove(get_valor(),deucerto);
 //
+//			}else{
+//				set_valor(get_valor()-1);
+//			}
 //			return true;
-//		}
 //	}
 //	return false;
 //}
