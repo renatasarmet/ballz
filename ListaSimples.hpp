@@ -20,19 +20,21 @@ public:
 	void ExibeLista();
 	void Insere(Nodetype *x);
 	void InsereADireita(Nodetype *x);
-	void ProcuraRemove(int x, bool &DeuCerto); 
-	void ProcuraRemove(string x, bool &DeuCerto);
+	void ProcuraRemove(int x, bool &DeuCerto);
+	//void ProcuraRemove(string x, bool &DeuCerto);
     void DeletaTudo();
-    
-    
+
+
 	Nodetype* PegaElementoAleatorio() const; // pega um elemento na lista aleatorio
     Nodetype* PegaElementoAleatorioTodosTipoX(int x) const; // pega um elemento aleatorio do tipo X
 	Nodetype* PegaElementoN(int n) const; // pega o N-esimo elemento da lista
 	int QuantidadeElementos() const; // conta a quantidade de elementos da lista
-    Nodetype* PegaElementoInfo(string info, bool &DeuCerto) ; // pega o elemento da lista pelo ID
+    //Nodetype* PegaElementoInfo(string info, bool &DeuCerto) ; // pega o elemento da lista pelo ID
+
+    Nodetype *P; // NAO PERMANECER COMO PUBLICO
 
 private:
-	Nodetype *P;
+
 	void Remove(Nodetype *Premove, bool &DeuCerto); // metodo privado pois quem deve ser chamado eh o procura remove
 };
 
@@ -62,8 +64,9 @@ void ListaSimples::ExibeLista(){
 	Paux = P;
 	while(Paux!=NULL){
 		cout<<"ID: "<<Paux->get_id();
-		cout << " ,Info: " << Paux->get_info();
-		cout << " e Tipo: " << Paux->get_tipo() << endl;
+		cout << " ,Valor: " << Paux->get_valor() ;
+		cout << " ,X: " << Paux->get_x();
+		cout << " ,Y: " << Paux->get_y() <<endl;
 		Paux = Paux->get_next();
 	}
 
@@ -104,7 +107,7 @@ void ListaSimples::ProcuraRemove(int x, bool &DeuCerto){
 		Paux = P;
 		while((Paux->get_next()->get_id()!=x)&&(Paux->get_next()!=NULL)){
 			Paux = Paux->get_next();
-            
+
 		}
 		if(Paux->get_next()!=NULL){
 			Remove(Paux, DeuCerto);
@@ -112,28 +115,28 @@ void ListaSimples::ProcuraRemove(int x, bool &DeuCerto){
 	}
 }
 
-inline void ListaSimples::ProcuraRemove(string x, bool & DeuCerto)
-{
-	Nodetype *Paux;
-	if (Vazia()) {
-		DeuCerto = false;
-	}
-	else if (P->get_info() == x) {
-		DeuCerto = true;
-		Paux = P;
-		P = P->get_next();
-		delete Paux;
-	}
-	else {
-		Paux = P;
-		while ((Paux->get_next()->get_info() != x) && (Paux->get_next() != NULL)) {
-			Paux = Paux->get_next();
-		}
-		if (Paux->get_next() != NULL) {
-			Remove(Paux, DeuCerto);
-		}
-	}
-}
+//void ListaSimples::ProcuraRemove(string x, bool & DeuCerto)
+//{
+//	Nodetype *Paux;
+//	if (Vazia()) {
+//		DeuCerto = false;
+//	}
+//	else if (P->get_info() == x) {
+//		DeuCerto = true;
+//		Paux = P;
+//		P = P->get_next();
+//		delete Paux;
+//	}
+//	else {
+//		Paux = P;
+//		while ((Paux->get_next()->get_info() != x) && (Paux->get_next() != NULL)) {
+//			Paux = Paux->get_next();
+//		}
+//		if (Paux->get_next() != NULL) {
+//			Remove(Paux, DeuCerto);
+//		}
+//	}
+//}
 
 void ListaSimples::Remove(Nodetype *Premove, bool &DeuCerto){
 	Nodetype *Paux2;
@@ -175,17 +178,17 @@ Nodetype* ListaSimples::PegaElementoAleatorio() const{
 	for(i=1;i<r;i++){
 		Paux = Paux->get_next();
 	}
-    
+
 	return Paux;
 }
 
 
 Nodetype* ListaSimples::PegaElementoAleatorioTodosTipoX(int x) const{
-    
+
     Nodetype *Paux;
     Paux = P;
     int r,i;
-    
+
     switch (x) {
         case 1:
             r = (rand() % 7 + 6);
@@ -199,7 +202,7 @@ Nodetype* ListaSimples::PegaElementoAleatorioTodosTipoX(int x) const{
         case 4:
             r = (rand() % 6 + 20);
             break;
-            
+
         case 5:
             r = (rand() % (QuantidadeElementos()-8) + 8); // NAO INSERE HORCRUX NEM VOLDEMORT
             break;
@@ -207,12 +210,12 @@ Nodetype* ListaSimples::PegaElementoAleatorioTodosTipoX(int x) const{
             r = 0; // should never happen
             break;
     }
-    
+
 
     for(i=1;i<r;i++){
         Paux = Paux->get_next();
     }
-    
+
     return Paux;
 }
 
@@ -228,32 +231,32 @@ Nodetype* ListaSimples::PegaElementoN(int n) const{
 	return Paux;
 }
 
-Nodetype* ListaSimples::PegaElementoInfo(string info, bool &DeuCerto) {
-    Nodetype *Paux;
-    if (Vazia()) {
-        DeuCerto = false;
-    }
-
-    else if (P->get_info() == info) {
-        DeuCerto = true;
-        return P;
-    }
-    else {
-        Paux = P;
-        while ((Paux->get_next() != NULL) && (Paux->get_next()->get_info() != info)) {
-            Paux = Paux->get_next();
-        }
-        if (Paux->get_next() != NULL) {
-            DeuCerto = true;
-            return Paux->get_next();
-        }
-        else{
-            DeuCerto = false;
-        }
-    }
-    
-    return NULL;
-    
-}
+//Nodetype* ListaSimples::PegaElementoInfo(string info, bool &DeuCerto) {
+//    Nodetype *Paux;
+//    if (Vazia()) {
+//        DeuCerto = false;
+//    }
+//
+//    else if (P->get_info() == info) {
+//        DeuCerto = true;
+//        return P;
+//    }
+//    else {
+//        Paux = P;
+//        while ((Paux->get_next() != NULL) && (Paux->get_next()->get_info() != info)) {
+//            Paux = Paux->get_next();
+//        }
+//        if (Paux->get_next() != NULL) {
+//            DeuCerto = true;
+//            return Paux->get_next();
+//        }
+//        else{
+//            DeuCerto = false;
+//        }
+//    }
+//
+//    return NULL;
+//
+//}
 
 #endif
