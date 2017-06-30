@@ -26,6 +26,7 @@
 #include "Plano.hpp"
 #include "instrucoes.h"
 
+#include "ResourcePath.hpp"
  
 
 using namespace std;
@@ -37,6 +38,9 @@ public:
     static void CriandoTudo();
     static void JogarNovamente(  Plano* plano, braco* hook);
 	static void novo_lancamento();
+    
+    
+    static int rodadaAtual;
     
 private:
     static bool IsExiting();
@@ -50,7 +54,7 @@ private:
   
     static bool VerificaGanhou();
     //static bool verifica_passou();
-   //static void verifica_colisao(Plano* plano, braco* hook);
+   static void verifica_colisao(Plano* plano, braco* hook);
     
     enum GameState {
         Inicializado, Mostrando_Tela_Inicial, Pausado, Mostrando_Menu, Jogando, Saindo, Ganhando, Perdendo, Mostrando_Instrucao, Mostrando_Transicao_Passou, Mostrando_Transicao_Horcrux, Nova_Fase, Fase_Final
@@ -64,6 +68,7 @@ private:
     static sf::Text totalText;
     static sf::Text metaText;
 	static pokeball pokebola;
+
 
 };
 #endif // !JOGO_H

@@ -5,6 +5,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <math.h>
+#include "ResourcePath.hpp"
 
 
 using namespace std;
@@ -14,7 +15,7 @@ class pokeball
 public:
 	pokeball();
 	virtual ~pokeball();
-	void Update(float);
+	void Update(float, bool);
 
 	virtual void pokebola();
 	virtual void desenhar(sf::RenderWindow& window);
@@ -22,6 +23,9 @@ public:
 	virtual void set_estado();
 	virtual void set_estado_false();
 	virtual bool verifica_estado();
+    
+    
+    void colidiuComOvo(float elapsedTime); //muda a direcao após colisao
 
 	virtual sf::Rect<float> get_bounding_rect();
 
@@ -30,12 +34,17 @@ public:
 
 	static double dir;
 	static bool lancado;
+    static bool colidiuOvo;
+    static bool novaRodada;
 
 private:
 	float _velocity;
 	float _angle;
 	float _elapsedTimeSinceStart;
 	bool existe_pokeball;
+    
+    int teste;
+    
 
 	sf::Sprite _sprite;
 	sf::Texture _imagem;

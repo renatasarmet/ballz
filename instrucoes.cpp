@@ -12,13 +12,13 @@ Instrucoes::instrucoes_opcoes Instrucoes::Mostrar(sf::RenderWindow& window)
 {
     //Carrega a imagem do menu de um arquivo
     sf::Texture imagem;
-    imagem.loadFromFile("imagens/instrucoes.jpg");
+    imagem.loadFromFile(resourcePath() + "imagens/instrucoes.jpg");
     
     sf::Sprite sprite;
     sprite.setTexture(imagem);
     
     std::string aux2 = std::to_string(get_k());
-    aux2 = "imagens/tutorial" + aux2 + ".jpg";
+    aux2 = resourcePath() + "imagens/tutorial" + aux2 + ".jpg";
 
     imagem_tutorial.loadFromFile(aux2);
     tutorial.setTexture(imagem_tutorial);

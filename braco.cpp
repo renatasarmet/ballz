@@ -21,12 +21,12 @@ void braco::update()
 void braco::update_todos()
 {
 	timeDelta = clock.restart().asSeconds();
-	_pokeball.Update(timeDelta);
+    _pokeball.Update(timeDelta, pokeball::colidiuOvo);
 }
 
 void braco::desenhar(sf::RenderWindow& renderWindow)
 {
-	_imagem.loadFromFile("imagens/braco.png");
+	_imagem.loadFromFile(resourcePath() + "imagens/braco.png");
 	_sprite.setTexture(_imagem);
 	_sprite.setPosition(225, 50);
 	_sprite.setOrigin(8, 2);
@@ -41,7 +41,6 @@ void braco::desenhar(sf::RenderWindow& renderWindow)
 		_pokeball.set_estado();
 		_pokeball.set_posicao();
 		_estado_braco = braco::Rotacionando;
-		cout << "lancou" << endl;
 		break;
 	case braco::Acertou:
 		_estado_braco = braco::Rotacionando;

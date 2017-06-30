@@ -1,106 +1,91 @@
-#include <iostream>
-#include "ListaSimples.hpp"
-#include "Nodetype.hpp"
-#include "Plano.hpp"
-
-#include <time.h>
-#include <ctime>
-
-using namespace std;
-
-
-void InsereNplano(int n, ListaSimples *plano, ListaSimples *listaGeral){
-	int i;
-	Nodetype *no;
-	Nodetype *noPtr;
-	for(i=0;i<n;i++){
-		no = listaGeral->PegaElementoAleatorio();
-		noPtr = new Nodetype();
-		noPtr->CopiaNode(no);
-		plano->Insere(noPtr);
-	}
-}
-
-
-int main()
-{
-    Plano plano;
-    int rodadaAtual;
-    bool DeuCerto;
-    srand(time(NULL));
-
-   // Nodetype *no;
-
-    rodadaAtual = 7;
-
-
-    cout << "ITENS DO PLANO: " << endl;
-    plano.ExibeLista();
-
-
-
-	cout << "Quantidade de elementos plano: " << plano.QuantidadeElementos() << endl << endl;
-
-
-
-
-//    //Inserindo na lista plano
-
-	cout << "Inserindo... " << endl;
-
-    plano.InsereNplano(rodadaAtual);
-
-    //Exibindo a lista plano
-    cout << "DEPOIS DE INSERIR NO PLANO: " << endl;
-   plano.ExibeLista();
-
-   cout << "Quantidade de elementos plano de novo: " << plano.QuantidadeElementos() << endl;
-
-
-   rodadaAtual +=1;
-
-   cout << "Inserindo... " << endl;
-
-   plano.InsereNplano(rodadaAtual);
-
-   //Exibindo a lista plano
-   cout << "DEPOIS DE INSERIR DE NOVO NO PLANO: " << endl;
-  plano.ExibeLista();
-
-  cout << "Quantidade de elementos plano de novo de novo: " << plano.QuantidadeElementos() << endl;
-
-
-
-  cout << "Removendo... " << endl;
-  plano.ProcuraRemove(5,DeuCerto);
-
-  //Exibindo a lista plano
-    cout << "DEPOIS DE REMOVER NO PLANO: " << endl;
-   plano.ExibeLista();
-
-   cout << "Quantidade de elementos plano de novo de novo de novo: " << plano.QuantidadeElementos() << endl;
-
-
-   rodadaAtual +=1;
-
-   cout << "Inserindo de novo... " << endl;
-
-     plano.InsereNplano(rodadaAtual);
-
-     //Exibindo a lista plano
-     cout << "DEPOIS DE INSERIR DE NOVO NO PLANO APOS REMOVER: " << endl;
-    plano.ExibeLista();
-
-    cout << "Quantidade de elementos plano de novo de novo de novo: " << plano.QuantidadeElementos() << endl;
-
-    rodadaAtual +=1;
-
-    cout << "Removendo tudo... " << endl;
-
-    plano.DeletaTudo();
-
-    plano.ExibeLista();
-
-    return 0;
-}
-
+//
+////
+//// Disclaimer:
+//// ----------
+////
+//// This code will work only if you selected window, graphics and audio.
+////
+//// Note that the "Run Script" build phase will copy the required frameworks
+//// or dylibs to your application bundle so you can execute it on any OS X
+//// computer.
+////
+//// Your resource files (images, sounds, fonts, ...) are also copied to your
+//// application bundle. To get the path to these resources, use the helper
+//// function `resourcePath()` from ResourcePath.hpp
+////
+//
+//#include <SFML/Audio.hpp>
+//#include <SFML/Graphics.hpp>
+//
+//// Here is a small helper for you! Have a look.
+//#include "ResourcePath.hpp"
+//
+//int main(int, char const**)
+//{
+//    // Create the main window
+//    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+//
+//    // Set the Icon
+//    sf::Image icon;
+//    if (!icon.loadFromFile(resourcePath() + "icon.png")) {
+//        return EXIT_FAILURE;
+//    }
+//    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+//
+//    // Load a sprite to display
+//    sf::Texture texture;
+//    if (!texture.loadFromFile(resourcePath() + "cute_image.jpg")) {
+//        return EXIT_FAILURE;
+//    }
+//    sf::Sprite sprite(texture);
+//
+//    // Create a graphical text to display
+//    sf::Font font;
+//    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
+//        return EXIT_FAILURE;
+//    }
+//    sf::Text text("Hello SFML", font, 50);
+//    text.setFillColor(sf::Color::Black);
+//
+//    // Load a music to play
+//    sf::Music music;
+//    if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
+//        return EXIT_FAILURE;
+//    }
+//
+//    // Play the music
+//    music.play();
+//
+//    // Start the game loop
+//    while (window.isOpen())
+//    {
+//        // Process events
+//        sf::Event event;
+//        while (window.pollEvent(event))
+//        {
+//            // Close window: exit
+//            if (event.type == sf::Event::Closed) {
+//                window.close();
+//            }
+//
+//            // Escape pressed: exit
+//            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+//                window.close();
+//            }
+//        }
+//
+//        // Clear screen
+//        window.clear();
+//
+//        // Draw the sprite
+//        window.draw(sprite);
+//
+//        // Draw the string
+//        window.draw(text);
+//
+//        // Update the window
+//        window.display();
+//    }
+//
+//    return EXIT_SUCCESS;
+//}

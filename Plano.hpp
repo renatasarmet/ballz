@@ -6,9 +6,10 @@
 #include "Nodetype.hpp"
 #include <time.h>
 #include <ctime>
+#include "ResourcePath.hpp"
 //#include "feitico.h"
 #define TAMANHO 8
-#define LIMITE_PLANO 10
+#define LIMITE_PLANO 60
 
 using namespace std;
 
@@ -21,6 +22,7 @@ public:
 private:
 	int contador;
 	int quantidadeJaInseridaID;
+    bool perdeu;
 };
 
 #endif /* Plano_hpp */
@@ -29,6 +31,7 @@ private:
 Plano::Plano() : ListaSimples(){
 	contador = 0;
 	quantidadeJaInseridaID = 0;
+    perdeu = 0;
 }
 
 Plano::~Plano(){
@@ -43,35 +46,39 @@ void Plano::InsereNplano(int rodadaAtual)
     Nodetype *no;
     no = P;
     while(no != NULL){
-    	no->set_posicao(no->get_x(),no->get_y()-93); // NAO SERA 1 DE VERDADE, TEM Q VER OS PIXELS.. MAS QUEREMOS DESCER PARA A PROXIMA LINHA
-    	if(no->get_y()==LIMITE_PLANO){
+        no->valorText.setString(to_string(no->get_valor()));
+    	no->set_posicao(no->get_x(),no->get_y()-93);
+        if(no->get_y()<=LIMITE_PLANO){
+            cout << "morreu " << endl;
     		DeletaTudo();
+            perdeu = 1;
     		//IMPLEMENTAR GRAFICAMENTE: DIZER AO USUARIO QUE O JOGO ACABOU
 
     	}
     	no = no->get_next();
     }
+    if(!perdeu){
+        for(i=0;i<TAMANHO;i++){
+            entraOuNao = rand() % 2;
+            if(entraOuNao==1){
+                r = (rand() % 2 + 1);
+                valor = rodadaAtual*r; // valor a ser inserido
+                // INSERE
 
-	for(i=0;i<TAMANHO;i++){
-		entraOuNao = rand() % 2;
-		if(entraOuNao==1){
-			r = (rand() % 2 + 1);
-			valor = rodadaAtual*r; // valor a ser inserido
-			// INSERE
-
-			quantidadeJaInseridaID +=1;
-			no = new Nodetype();
-			no->carregar("imagens/ovo.png");
-			no->set_id(quantidadeJaInseridaID);
-			no->set_valor(valor);
-			_y = 510; // ISSO NAO EH 1 DE VERDADE, EH O VALOR QUE CORRESPONDE A PRIMEIRA LINHA DO QUADRADO
-			_x = i * 50 + 35; // AQUI TEREMOS QUE SUBSTITUIR PELOS PIXELS CORRESPONDESTES, ISTO EH, i * (distancia entre um ovo e outro) + (centro do primeiro ovo)
-			no->set_posicao(_x, _y);
-			cout << "Inseri com i = " << i << endl;
+                quantidadeJaInseridaID +=1;
+                no = new Nodetype();
+                no->carregar(resourcePath() + "imagens/ovo.png");
+                no->set_id(quantidadeJaInseridaID);
+                no->set_valor(valor);
+                no->valorText.setString(to_string(no->get_valor()));
+                _y = 510; // ISSO NAO EH 1 DE VERDADE, EH O VALOR QUE CORRESPONDE A PRIMEIRA LINHA DO QUADRADO
+                _x = i * 50 + 35; // AQUI TEREMOS QUE SUBSTITUIR PELOS PIXELS CORRESPONDESTES, ISTO EH, i * (distancia entre um ovo e outro) + (centro do primeiro ovo)
+                no->set_posicao(_x, _y);
 			
-			Insere(no);
-		}
-	}
+                Insere(no);
+            }
+        }
+    }
 
 
 }

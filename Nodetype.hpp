@@ -5,7 +5,8 @@
 //#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
-//#include "feitico.h"
+//#include "pokeball.h"
+#include "pokeball.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ public:
 	//FUNCOES
 	virtual void carregar(std::string nomearquivo);
 	virtual void desenhar(sf::RenderWindow& renderWindow);
-//	virtual bool colidiu(feitico& _feitico, Plano *plano);
+    virtual bool colidiu(pokeball& _pokeball);
 
 	float get_x() const;
 	float get_y() const;
@@ -53,6 +54,8 @@ private:
 	int valor;
 	//string info;
 	bool carregou;
+    
+    static sf::Text valorText;
 	sf::Texture _imagem;
 	std::string nome_arquivo;
 	float x, y; // vai ter q apagar o x e y depois
@@ -94,26 +97,21 @@ void Nodetype::desenhar(sf::RenderWindow & renderWindow)
 		renderWindow.draw(_sprite);
 }
 
-//bool Nodetype::colidiu(feitico& _feitico, Plano *plano)
-//{
-//	bool deucerto;
-//	if (_feitico.lancado == true)
-//	{
-////		if(_sprite.getPosition().x - _sprite.getLocalBounds().width/2 <= _feitico.get_bounding_rect().left + _feitico.get_bounding_rect().width
-////			&& _sprite.getPosition().x + _sprite.getLocalBounds().width / 2  >= _feitico.get_bounding_rect().left
-////			&& _sprite.getPosition().y - _sprite.getLocalBounds().height / 2 <= _feitico.get_bounding_rect().top + _feitico.get_bounding_rect().height
-////			&& _sprite.getPosition().y + _sprite.getLocalBounds().height / 2 >= _feitico.get_bounding_rect().top )
-////		{
-//			if(get_valor()==1){
-//				plano->ProcuraRemove(get_valor(),deucerto);
-//
-//			}else{
-//				set_valor(get_valor()-1);
-//			}
-//			return true;
-//	}
-//	return false;
-//}
+bool Nodetype::colidiu(pokeball& _pokeball)
+{
+	bool deucerto;
+	if (_pokeball.lancado == true)
+	{
+		if(_sprite.getPosition().x - _sprite.getLocalBounds().width/2 <= _pokeball.get_bounding_rect().left + _pokeball.get_bounding_rect().width
+			&& _sprite.getPosition().x + _sprite.getLocalBounds().width / 2  >= _pokeball.get_bounding_rect().left
+			&& _sprite.getPosition().y - _sprite.getLocalBounds().height / 2 <= _pokeball.get_bounding_rect().top + _pokeball.get_bounding_rect().height
+			&& _sprite.getPosition().y + _sprite.getLocalBounds().height / 2 >= _pokeball.get_bounding_rect().top )
+		{
+			return true;
+        }
+	}
+	return false;
+}
 
 float Nodetype::get_x() const
 {
@@ -133,10 +131,6 @@ void Nodetype::set_posicao(float _x, float _y)
 	{
 		_sprite.setPosition(_x, _y);
 	}
-	//this->x = _x;
-	//this->y = _y;
-
-	//ESSA PARTE VAI SER ALTERADA NA PARTE GRAFICA
 }
 
 void Nodetype::set_origem(float x, float y)

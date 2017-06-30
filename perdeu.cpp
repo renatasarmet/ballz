@@ -3,7 +3,7 @@
 Perdeu::perdeu Perdeu::Mostrar(sf::RenderWindow & renderWindow)
 {
     sf::Texture imagem;
-    imagem.loadFromFile("imagens/perdeu.jpg");
+    imagem.loadFromFile(resourcePath() + "imagens/perdeu.jpg");
     
     sf::Sprite sprite;
     sprite.setTexture(imagem);

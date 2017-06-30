@@ -11,14 +11,16 @@ bool pokeball::lancado = false;
 braco::estado_braco braco::_estado_braco = Rotacionando;
 double pokeball::dir = 0;
 pokeball jogo::pokebola;
-
+bool pokeball::colidiuOvo = false;
+int jogo::rodadaAtual = 0;
+bool pokeball::novaRodada = false;
 
 // pokeball AINDA SENDO LANCADO NA TRANSICAO
 
 void jogo::Start( Plano* plano, braco* hook)
 {
     sf::Texture imagem;
-    imagem.loadFromFile("imagens/fundo.jpg");
+    imagem.loadFromFile(resourcePath() + "imagens/fundo.jpg");
     background.setTexture(imagem); //DEFINE O BACKGROUND
     
     //Resetando as listas
@@ -26,7 +28,12 @@ void jogo::Start( Plano* plano, braco* hook)
 
 	//pokebola.set_posicao(225, 50);
     
-    plano->InsereNplano(7); // INICIALIZANDO O PLANO
+    
+    //Setando a rodada atual
+    rodadaAtual = 1;
+    
+    plano->InsereNplano(rodadaAtual); // INICIALIZANDO O PLANO
+    
     
     
    /* estado_jogo = jogo::Mostrando_Tela_Inicial;*/
@@ -62,8 +69,7 @@ void jogo::JogarNovamente(Plano* plano, braco* hook)
 
 void jogo::novo_lancamento()
 {
-	if (pokeball::lancado == false)
-		cout << "inutil" << endl;
+	//if (pokeball::lancado == false)
 		//faz tudo
 
 
@@ -114,12 +120,20 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
             sf::Sprite botao_pausar;
             sf::Texture imagem1;
             
-            imagem1.loadFromFile("imagens/pausar.png");
+            imagem1.loadFromFile(resourcePath() + "imagens/pausar.png");
             botao_pausar.setTexture(imagem1);
             botao_pausar.setPosition(335, 3);
 
-            //verifica_colisao(plano, hook);
-
+            verifica_colisao(plano, hook);
+            
+            
+            if(pokeball::novaRodada){
+                rodadaAtual += 1;
+                cout << "NOVA RODADA : " << rodadaAtual << endl;
+                pokeball::novaRodada = false;
+                plano->InsereNplano(rodadaAtual);
+            }
+            
             janela.clear();
             janela.draw(background);
             hook->desenhar(janela);
@@ -158,11 +172,12 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
 //								pokebola.set_posicao(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y);
 								braco::_estado_braco = braco::Pokebola_Lancada;
 								pokeball::dir = (hook->get_rotacao() + 90)*0.0174532925;
-								plano->InsereNplano(10);
+								
 							}
 						break;
 					case sf::Event::MouseButtonReleased:
 						novo_lancamento();
+                        
 					case sf::Event::MouseMoved:
 						//hook->update(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y);
                     default:
@@ -232,62 +247,38 @@ bool jogo::VerificaGanhou()
 //    return false;
 //}
 
-//void jogo::verifica_colisao( Plano* plano, braco* hook)
-//{
-//    Nodetype *Paux;
-//    bool ok = false;
-//    Paux = plano->PegaElementoN(1);
-//    
-//    while ((Paux != NULL) && (ok == false))
-//    {
-//        if (Paux->colidiu(hook->_pokeball))
-//        {
-//            switch (Paux->get_tipo())
-//            {
-//                case 1:
-//                    if (hook->_pokeball.get_tipo() == 2)
-//                        total -= 200;
-//                    else
-//                        total += Paux->get_valor();
-//                    break;
-//                case 2:
-//                    if (hook->_pokeball.get_tipo() == 2)
-//                        total += Paux->get_valor();
-//                    else
-//                        total -= 500;
-//                    break;
-//                case 3:
-//                    if (hook->_pokeball.get_tipo() == 2)
-//                        estado_jogo = Perdendo;
-//                    else
-//                    {
-//                        total += Paux->get_valor();
-//                        itensGanhar->ProcuraRemove(Paux->get_info(), ok, destruidos, todosItens);  // ACHO QUE O ERRO ESTA AQUI
-//                    }
-//                    break;
-//                case 4:
-//                    if (hook->_pokeball.get_tipo() == 2)
-//                        total += Paux->get_valor();
-//                    break;
-//				case 5:
-//					if (hook->_pokeball.get_tipo() == 2)
-//						estado_jogo = Perdendo;
-//					else
-//					{
-//						total += Paux->get_valor();
-//						voldemort_morreu = true;
-//					}
-//                default:
-//                    break;
-//            }
-//            pokeball::lancado = false;
-//            braco::_estado_braco = braco::Acertou;
-//            plano->ProcuraRemove(Paux->get_id(), ok);
-//            totalText.setString("$ " + to_string(total));
-//        }
-//        Paux = Paux->get_next();
-//    }
-//}
+void jogo::verifica_colisao( Plano* plano, braco* hook)
+{
+    Nodetype *Paux;
+    bool ok = false;
+    Paux = plano->PegaElementoN(1);
+    
+    while ((Paux != NULL) && (ok == false))
+    {
+        if (Paux->colidiu(hook->_pokeball))
+        {
+           
+           // pokeball::lancado = false;
+            braco::_estado_braco = braco::Acertou;
+            //plano->ProcuraRemove(Paux->get_id(), ok); // NAO VAI SER ASSIM DEPOIS, TEM Q DIMINUIR O VALOR DO OVO
+            cout << "TINHA VALOR = " << Paux->get_valor() << endl;
+            if(Paux->get_valor()>1){
+                Paux->set_valor(Paux->get_valor()-1);
+                cout << "TENHO AGORA VALOR = " << Paux->get_valor() << endl;
+            }
+            else{
+                plano->ProcuraRemove(Paux->get_id(), ok);
+                cout << " REMOVI " << endl;
+            }
+            
+            
+            
+            pokeball::colidiuOvo = true;
+            
+        }
+        Paux = Paux->get_next();
+    }
+}
 
 void jogo::mostrar_menu()
 {
