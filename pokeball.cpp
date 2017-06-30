@@ -4,6 +4,8 @@ pokeball::pokeball() :_velocity(50.f), _elapsedTimeSinceStart(0.0f)
 {
 	existe_pokeball = true;
     colidiuOvo = false;
+    qtdRestantePokebola = 1;
+    qtdPokebola = 1;
 }
 
 pokeball::~pokeball()
@@ -24,20 +26,17 @@ void pokeball::Update(float elapsedTime, bool colidiuOvo)
     
     if(colidiuOvo == true){
         pokeball::colidiuOvo = false;
-        cout << colidiuOvo << endl;
         dir = 360.0f - (dir - 180.0f);
         moveByY = -moveByY;
     }
     
     
     if (lancado && (_sprite.getPosition().x <= 0)){
-        //_sprite.setPosition(450, _sprite.getPosition().y);
         dir = dir + 90.0f;
         moveByX = - moveByX;
         moveByY = - moveByY;
     }
-    else if (lancado && (_sprite.getPosition().x >= 400)){
-        //_sprite.setPosition(0, _sprite.getPosition().y);
+    else if (lancado && (_sprite.getPosition().x >= 440)){
         dir = dir - 90.0f;
         moveByY = - moveByY;
         moveByX = - moveByX;
@@ -46,14 +45,13 @@ void pokeball::Update(float elapsedTime, bool colidiuOvo)
     
     if (lancado && (_sprite.getPosition().y <= 0)){
         lancado = false;
-        novaRodada = true;
-        //cout << "rodada atual: " << jogo::rodadaAtual << endl;
+        if (!diminuiRestante()){
+            novaRodada = true;
+        }
     }
     
     else if (lancado &&(_sprite.getPosition().y >= 580)){
         dir = 360.0f - (dir - 180.0f);
-//        if(dir > 260.0f && dir < 280.0f) dir += 20.0f;
-//        if(dir > 80.0f && dir < 100.0f) dir += 20.0f;
         moveByY = -moveByY;
     }
     
@@ -68,6 +66,8 @@ void pokeball::pokebola()
 		_sprite.setTexture(_imagem);
 		_sprite.setPosition(10 * cos(dir) + 225, 10 * sin(dir) + 50);
 	}
+    
+    pegouNovaPokeball = 0;
 }
 
 void pokeball::desenhar(sf::RenderWindow & window)
@@ -112,10 +112,38 @@ float pokeball::get_y()
 	return _sprite.getPosition().y;
 }
 
-//void pokeball::colidiuComOvo(float elapsedTime){
-//    cout << "colidiu com ovo" << endl;
-//    colidiuOvo = true;
-//    Update(elapsedTime, colidiuOvo);
-//}
+
+bool pokeball::diminuiRestante(){
+    qtdRestantePokebola -= 1;
+    if(qtdRestantePokebola > 0)
+        return true;
+    
+    else {
+        reiniciaRestante();
+        return false;
+    }
+}
 
 
+void pokeball::aumentaQtdPokebola(){
+    qtdPokebola += 1;
+}
+
+
+void pokeball::reiniciaRestante(){
+    qtdRestantePokebola = qtdPokebola;
+}
+
+
+int pokeball::get_qtdRestantePokebola() const{
+    return qtdRestantePokebola;
+}
+
+int pokeball::get_qtdPokebola() const{
+    return qtdPokebola;
+}
+
+
+void pokeball::reiniciaQtdPokebola(){
+    qtdPokebola = 1;
+}

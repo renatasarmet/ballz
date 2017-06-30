@@ -48,6 +48,8 @@ public:
 
 	sf::Sprite _sprite;
     static sf::Text valorText;
+    
+    
 
 
 private:
@@ -57,7 +59,8 @@ private:
 	//string info;
 	bool carregou;
     
-    	sf::Texture _imagem;
+    sf::Font fonte;
+    sf::Texture _imagem;
 	std::string nome_arquivo;
 	float x, y; // vai ter q apagar o x e y depois
 };
@@ -73,10 +76,11 @@ Nodetype::Nodetype(){
     
     
     //LOAD FONT AND TEXT
+    fonte.loadFromFile(resourcePath() + "imagens/pokemon.ttf");
     valorText.setCharacterSize(25);
     valorText.setFillColor(sf::Color::Black);
-
-    
+    valorText.setFont(fonte);
+    valorText.setOrigin(_sprite.getLocalBounds().width/2, _sprite.getLocalBounds().height/2);
 }
 
 Nodetype::~Nodetype(){

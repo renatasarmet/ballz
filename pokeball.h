@@ -23,6 +23,18 @@ public:
 	virtual void set_estado();
 	virtual void set_estado_false();
 	virtual bool verifica_estado();
+    void set_id(int id);
+    int get_id() const;
+    
+    
+    static bool diminuiRestante();
+    static void aumentaQtdPokebola();
+    static void reiniciaRestante();
+    static void reiniciaQtdPokebola();
+    
+    int get_qtdRestantePokebola() const;
+    int get_qtdPokebola() const;
+
     
     
     void colidiuComOvo(float elapsedTime); //muda a direcao após colisao
@@ -42,8 +54,9 @@ private:
 	float _angle;
 	float _elapsedTimeSinceStart;
 	bool existe_pokeball;
-    
-    int teste;
+    bool pegouNovaPokeball;
+    static int qtdPokebola;
+    static int qtdRestantePokebola;
     
 
 	sf::Sprite _sprite;

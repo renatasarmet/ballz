@@ -2,10 +2,8 @@
 
 jogo::GameState jogo::estado_jogo = Inicializado;
 sf::RenderWindow jogo::janela;
-sf::Text jogo::timerText;
-sf::Text jogo::totalText;
 sf::Text jogo::nivelText;
-sf::Text jogo::metaText;
+sf::Text jogo::pokebolaText;
 sf::Sprite jogo::background;
 bool pokeball::lancado = false;
 braco::estado_braco braco::_estado_braco = Rotacionando;
@@ -15,10 +13,10 @@ bool pokeball::colidiuOvo = false;
 int jogo::rodadaAtual = 0;
 bool pokeball::novaRodada = false;
 sf::Text Nodetype::valorText;
+int pokeball::qtdRestantePokebola = 1;
+int pokeball::qtdPokebola = 1;
 
-// pokeball AINDA SENDO LANCADO NA TRANSICAO
-
-void jogo::Start( Plano* plano, braco* hook)
+void jogo::Start(Plano* plano, braco* hook)
 {
     sf::Texture imagem;
     imagem.loadFromFile(resourcePath() + "imagens/fundo.jpg");
@@ -26,18 +24,26 @@ void jogo::Start( Plano* plano, braco* hook)
     
     //Resetando as listas
     plano->DeletaTudo();
-
-	//pokebola.set_posicao(225, 50);
     
-    
-    //Setando a rodada atual
+    //Resetando rodada atual e quantidade de pokeball
     rodadaAtual = 1;
+    pokebola.reiniciaQtdPokebola();
+    pokebola.reiniciaRestante();
     
-    plano->InsereNplano(rodadaAtual); // INICIALIZANDO O PLANO
+    //SETANDO OS TEXTOS
+    nivelText.setString(to_string(rodadaAtual));
+    pokebolaText.setString(to_string(pokebola.get_qtdRestantePokebola()));
     
+    //Resetando o Perdeu
+    plano->reseta_perdeu_false();
     
+    //Setando pokeball para nao lancado
+    pokeball::lancado = false;
     
-   /* estado_jogo = jogo::Mostrando_Tela_Inicial;*/
+    // Inicializando o plano
+    plano->InsereNplano(rodadaAtual);
+    
+    //estado_jogo = jogo::Jogando;
 
     while (!IsExiting())
     {
@@ -49,14 +55,25 @@ void jogo::Start( Plano* plano, braco* hook)
 
 void jogo::CriandoTudo()
 {
-    
-    
-        
-    
 	janela.create(sf::VideoMode(450, 600), "PokeBallz", sf::Style::Close); //DEFINE TAMANHO DA JANELA, O QUE APARECE NO CABEÇALHO E FUNCOES DISPONIVEIS (FECHAR, RESIZE, MINIMIZAR)
    
     Plano plano;
 	braco hook;
+    
+    //LOAD FONT E SETA
+    sf::Font fonte;
+    fonte.loadFromFile(resourcePath() + "imagens/pokemon1.ttf");
+    
+    //SETANDO OS TEXTOS
+    nivelText.setFont(fonte);
+    nivelText.setPosition(125, 8);
+    nivelText.setCharacterSize(22);
+    nivelText.setFillColor(sf::Color::White);
+    
+    pokebolaText.setFont(fonte);
+    pokebolaText.setPosition(40, 8);
+    pokebolaText.setCharacterSize(22);
+    pokebolaText.setFillColor(sf::Color::White);
    
 	estado_jogo = jogo::Mostrando_Tela_Inicial;
     jogo::Start(&plano, &hook);
@@ -64,22 +81,11 @@ void jogo::CriandoTudo()
 	srand(time(NULL));
 }
 
-// LEMBRAR DE SETTAR O pokeball PARA NAO LANCADO
 
 void jogo::JogarNovamente(Plano* plano, braco* hook)
 {
-	estado_jogo = jogo::Jogando;
 	jogo::Start(plano, hook);
-}
-
-void jogo::novo_lancamento()
-{
-	//if (pokeball::lancado == false)
-		//faz tudo
-
-
-	//volta pra origem
-//	pokebola.set_posicao(225, 50);
+    estado_jogo = jogo::Jogando;
 }
                                     
 bool jogo::IsExiting()
@@ -134,10 +140,17 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
             
             if(pokeball::novaRodada){
                 rodadaAtual += 1;
-                cout << "NOVA RODADA : " << rodadaAtual << endl;
+                //pokebola.aumentaQtdPokebola();
                 pokeball::novaRodada = false;
                 plano->InsereNplano(rodadaAtual);
             }
+            
+            if(plano->get_perdeu())
+                estado_jogo = jogo::Perdendo;
+
+            //SETANDO OS TEXTOS
+            nivelText.setString(to_string(rodadaAtual));
+            pokebolaText.setString(to_string(pokebola.get_qtdRestantePokebola()));
             
             janela.clear();
             janela.draw(background);
@@ -145,6 +158,8 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
             hook->update_todos();
 			pokebola.desenhar(janela);
             plano->desenha_todos_plano(janela);
+            janela.draw(nivelText);
+            janela.draw(pokebolaText);
             janela.draw(botao_pausar);
 			janela.display();
             
@@ -158,33 +173,23 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
                     case sf::Event::KeyPressed:
                         if (evento_atual.key.code == sf::Keyboard::Escape)
 							estado_jogo = jogo::Mostrando_Menu;
-      //                  else if(evento_atual.key.code == sf::Keyboard::F )
-						//{
-						//	pokebola.set_posicao(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y);
-      //                      braco::_estado_braco = braco::Pokebola_Lancada;
-      //                      pokeball::dir = (hook->get_rotacao() + 90)*0.0174532925;
-      //                  }
                         break;
                     case sf::Event::MouseButtonPressed:
                         if (evento_atual.mouseButton.button == sf::Mouse::Left && pokeball::lancado == false)
+                        {
                             if (botao_pausar.getGlobalBounds().contains(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y))
                             {                                
 								estado_jogo = jogo::Mostrando_Menu;
                             }
 
-							else
-							{
-//								pokebola.set_posicao(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y);
+							else{
 								braco::_estado_braco = braco::Pokebola_Lancada;
 								pokeball::dir = (hook->get_rotacao() + 90)*0.0174532925;
 								
 							}
+                        }
 						break;
-					case sf::Event::MouseButtonReleased:
-						novo_lancamento();
-                        
-					case sf::Event::MouseMoved:
-						//hook->update(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y);
+						
                     default:
                         break;
                 }
@@ -201,7 +206,7 @@ void jogo::mostrar_tela_inicial()
     estado_jogo = jogo::Mostrando_Menu;
 }
 
-void jogo::mostrar_ganhou(  Plano* plano, braco* hook)
+void jogo::mostrar_ganhou(Plano* plano, braco* hook)
 {
     Ganhou ganhou;
     Ganhou::ganhou resultado = ganhou.Mostrar(janela);
@@ -216,7 +221,7 @@ void jogo::mostrar_ganhou(  Plano* plano, braco* hook)
     }
 }
 
-void jogo::mostrar_perdeu(  Plano* plano, braco* hook)
+void jogo::mostrar_perdeu(Plano* plano, braco* hook)
 {
     Perdeu perdeu;
     Perdeu::perdeu resultado = perdeu.Mostrar(janela);
@@ -226,31 +231,12 @@ void jogo::mostrar_perdeu(  Plano* plano, braco* hook)
             estado_jogo = jogo::Saindo;
             break;
         case Perdeu::Jogar_Novamente:
+            estado_jogo = jogo::Jogando;
             jogo::JogarNovamente(plano, hook);
             break;
     }
 }
 
-bool jogo::VerificaGanhou()
-{
-    if (true)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-                       
-//bool jogo::verifica_passou()
-//{
-//    if (total >= meta)
-//    {
-//        return true;
-//    }
-//    return false;
-//}
 
 void jogo::verifica_colisao( Plano* plano, braco* hook)
 {
@@ -266,18 +252,14 @@ void jogo::verifica_colisao( Plano* plano, braco* hook)
            // pokeball::lancado = false;
             braco::_estado_braco = braco::Acertou;
             //plano->ProcuraRemove(Paux->get_id(), ok); // NAO VAI SER ASSIM DEPOIS, TEM Q DIMINUIR O VALOR DO OVO
-            cout << "TINHA VALOR = " << Paux->get_valor() << endl;
             if(Paux->get_valor()>1){
                 Paux->set_valor(Paux->get_valor()-1);
-                cout << "TENHO AGORA VALOR = " << Paux->get_valor() << endl;
             }
             else{
+                if (Paux->get_valor() == -1)
+                    pokebola.aumentaQtdPokebola();
                 plano->ProcuraRemove(Paux->get_id(), ok);
-                cout << " REMOVI " << endl;
             }
-            
-            
-            
             pokeball::colidiuOvo = true;
             
         }
@@ -333,7 +315,12 @@ void jogo::mostrar_instrucao()
         }
     }
 }
-                       
+
+
+
+
+
+
 int main(int argc, char** argv)
 {
     jogo::CriandoTudo();

@@ -14,7 +14,7 @@ void braco::update()
 	_sprite.setRotation(_sprite.getRotation() + direcao_rotacao);
 	if (_sprite.getRotation() == 70 || _sprite.getRotation() == 290)
 	{
-		direcao_rotacao = -direcao_rotacao;
+		direcao_rotacao = - direcao_rotacao;
 	}
 }
 

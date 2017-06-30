@@ -36,25 +36,22 @@ class jogo
 public:
     static void Start(Plano* plano, braco* hook);
     static void CriandoTudo();
-    static void JogarNovamente(  Plano* plano, braco* hook);
+    static void JogarNovamente(Plano* plano, braco* hook);
 	static void novo_lancamento();
-    
     
     static int rodadaAtual;
     
 private:
     static bool IsExiting();
-    static void loop_jogo(  Plano* plano, braco* hook);
+    static void loop_jogo( Plano* plano, braco* hook);
     
     static void mostrar_tela_inicial();
     static void mostrar_menu();
 	static void mostrar_instrucao();
-    static void mostrar_ganhou(  Plano* plano, braco* hook);
-    static void mostrar_perdeu(  Plano* plano, braco* hook);
+    static void mostrar_ganhou( Plano* plano, braco* hook);
+    static void mostrar_perdeu( Plano* plano, braco* hook);
   
-    static bool VerificaGanhou();
-    //static bool verifica_passou();
-   static void verifica_colisao(Plano* plano, braco* hook);
+    static void verifica_colisao(Plano* plano, braco* hook);
     
     enum GameState {
         Inicializado, Mostrando_Tela_Inicial, Pausado, Mostrando_Menu, Jogando, Saindo, Ganhando, Perdendo, Mostrando_Instrucao, Mostrando_Transicao_Passou, Mostrando_Transicao_Horcrux, Nova_Fase, Fase_Final
@@ -63,10 +60,8 @@ private:
     static GameState estado_jogo;
     static sf::RenderWindow janela;
     static sf::Sprite background;
-    static sf::Text timerText;
     static sf::Text nivelText;
-    static sf::Text totalText;
-    static sf::Text metaText;
+    static sf::Text pokebolaText;
 	static pokeball pokebola;
 
 
