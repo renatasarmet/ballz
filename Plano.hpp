@@ -48,6 +48,9 @@ void Plano::InsereNplano(int rodadaAtual)
     while(no != NULL){
         no->valorText.setString(to_string(no->get_valor()));
     	no->set_posicao(no->get_x(),no->get_y()-93);
+        no->valorText.setPosition(no->get_x(),no->get_y()); //ASSIM?
+
+        
         if(no->get_y()<=LIMITE_PLANO){
             cout << "morreu " << endl;
     		DeletaTudo();
@@ -63,7 +66,6 @@ void Plano::InsereNplano(int rodadaAtual)
             if(entraOuNao==1){
                 r = (rand() % 2 + 1);
                 valor = rodadaAtual*r; // valor a ser inserido
-                // INSERE
 
                 quantidadeJaInseridaID +=1;
                 no = new Nodetype();
@@ -71,9 +73,10 @@ void Plano::InsereNplano(int rodadaAtual)
                 no->set_id(quantidadeJaInseridaID);
                 no->set_valor(valor);
                 no->valorText.setString(to_string(no->get_valor()));
-                _y = 510; // ISSO NAO EH 1 DE VERDADE, EH O VALOR QUE CORRESPONDE A PRIMEIRA LINHA DO QUADRADO
-                _x = i * 50 + 35; // AQUI TEREMOS QUE SUBSTITUIR PELOS PIXELS CORRESPONDESTES, ISTO EH, i * (distancia entre um ovo e outro) + (centro do primeiro ovo)
+                _y = 510; // valor correspondente à primeira linha de ovos
+                _x = i * 50 + 35; // i * (distancia entre um ovo e outro) + (centro do primeiro ovo)
                 no->set_posicao(_x, _y);
+                no->valorText.setPosition(no->get_x(),no->get_y()); // SERA Q É ASSIM?
 			
                 Insere(no);
             }
@@ -83,7 +86,7 @@ void Plano::InsereNplano(int rodadaAtual)
 
 }
 
-// REFAZER COM A PARTE GRAFICA
+
 void Plano::desenha_todos_plano(sf::RenderWindow& window)
 {
 	Nodetype *Paux;
@@ -96,6 +99,7 @@ void Plano::desenha_todos_plano(sf::RenderWindow& window)
     while (Paux != NULL)
     {
 		Paux->desenhar(window);
+        window.draw(Paux->valorText); // PQ NAO FUNCIONA?
         Paux = Paux->get_next();
     }
 }

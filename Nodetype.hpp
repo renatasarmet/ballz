@@ -47,6 +47,8 @@ public:
 	int get_valor() const;
 
 	sf::Sprite _sprite;
+    static sf::Text valorText;
+
 
 private:
 	Nodetype *next;
@@ -55,8 +57,7 @@ private:
 	//string info;
 	bool carregou;
     
-    static sf::Text valorText;
-	sf::Texture _imagem;
+    	sf::Texture _imagem;
 	std::string nome_arquivo;
 	float x, y; // vai ter q apagar o x e y depois
 };
@@ -69,6 +70,13 @@ Nodetype::Nodetype(){
 	valor = 0;
 	x = 0;
 	y = 0;
+    
+    
+    //LOAD FONT AND TEXT
+    valorText.setCharacterSize(25);
+    valorText.setFillColor(sf::Color::Black);
+
+    
 }
 
 Nodetype::~Nodetype(){
@@ -93,8 +101,11 @@ void Nodetype::carregar(std::string nomearquivo)
 
 void Nodetype::desenhar(sf::RenderWindow & renderWindow)
 {
-    if (carregou)
+    if (carregou){
 		renderWindow.draw(_sprite);
+        renderWindow.draw(valorText);
+    }
+    
 }
 
 bool Nodetype::colidiu(pokeball& _pokeball)

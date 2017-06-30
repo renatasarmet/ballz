@@ -14,6 +14,7 @@ pokeball jogo::pokebola;
 bool pokeball::colidiuOvo = false;
 int jogo::rodadaAtual = 0;
 bool pokeball::novaRodada = false;
+sf::Text Nodetype::valorText;
 
 // pokeball AINDA SENDO LANCADO NA TRANSICAO
 
@@ -48,6 +49,10 @@ void jogo::Start( Plano* plano, braco* hook)
 
 void jogo::CriandoTudo()
 {
+    
+    
+        
+    
 	janela.create(sf::VideoMode(450, 600), "PokeBallz", sf::Style::Close); //DEFINE TAMANHO DA JANELA, O QUE APARECE NO CABEÇALHO E FUNCOES DISPONIVEIS (FECHAR, RESIZE, MINIMIZAR)
    
     Plano plano;
