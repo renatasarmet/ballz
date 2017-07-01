@@ -7,7 +7,6 @@
 #include <time.h>
 #include <ctime>
 #include "ResourcePath.hpp"
-//#include "feitico.h"
 #define TAMANHO 8
 #define LIMITE_PLANO 60
 
@@ -54,15 +53,19 @@ void Plano::InsereNplano(int rodadaAtual)
     while(no != NULL){
         no->valorText.setString(to_string(no->get_valor()));
     	no->set_posicao(no->get_x(),no->get_y()-93);
-        no->valorText.setPosition(no->get_x(),no->get_y()); //ASSIM?
+        no->valorText.setPosition(no->get_x(),no->get_y());
 
-        
         if(no->get_y()<=LIMITE_PLANO){
-    		DeletaTudo();
-            perdeu = 1;
+            if(no->get_valor()==-1)
+                ProcuraRemove(no->get_id(), DeuCerto);
+            else{
+                DeletaTudo();
+                perdeu = 1;
+            }
     	}
     	no = no->get_next();
     }
+    
     if(!perdeu){
         for(i=0;i<TAMANHO;i++){
             entraOuNao = rand() % 2;
@@ -105,17 +108,10 @@ void Plano::InsereNplano(int rodadaAtual)
                     no->valorText.setPosition(no->get_x(),no->get_y());
                     
                     Insere(no);
-                    
-                    
                 }
-                
-                
-                
             }
         }
     }
-
-
 }
 
 

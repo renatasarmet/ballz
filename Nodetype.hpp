@@ -1,11 +1,8 @@
 #ifndef NODETYPE_HPP
 #define NODETYPE_HPP
 
-//#include <SFML/Window.hpp>
-//#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
-//#include "pokeball.h"
 #include "pokeball.h"
 
 using namespace std;
@@ -30,18 +27,11 @@ public:
 	float get_y() const;
 
 	void set_posicao(float _x, float _y);
-	void set_origem(float x, float y);
-	//virtual void move(float x, float y);
-
-//	virtual sf::Rect<float> get_bounding_rect();
 
 	Nodetype* get_next() const;
 	void set_next(Nodetype *);
-//	string get_info() const;
-//	void set_info(string);
 	int get_id() const;
 	void set_id(int);
-	void ExibeInformacoes() const;
 	void CopiaNode(Nodetype *original);
 	void set_valor(int);
 	int get_valor() const;
@@ -49,30 +39,22 @@ public:
 	sf::Sprite _sprite;
     static sf::Text valorText;
     
-    
-
-
 private:
 	Nodetype *next;
 	int id;
 	int valor;
-	//string info;
 	bool carregou;
     
     sf::Font fonte;
     sf::Texture _imagem;
 	std::string nome_arquivo;
-	float x, y; // vai ter q apagar o x e y depois
 };
 
 
 Nodetype::Nodetype(){
 	next = NULL;
 	id = 0;
-	//info = "vazia";
 	valor = 0;
-	x = 0;
-	y = 0;
     
     
     //LOAD FONT AND TEXT
@@ -84,7 +66,7 @@ Nodetype::Nodetype(){
 }
 
 Nodetype::~Nodetype(){
-	//cout << "GAME OVER NO DESTRUTOR DO ID = " << get_id() <<endl;
+    
 }
 
 void Nodetype::carregar(std::string nomearquivo)
@@ -131,13 +113,11 @@ bool Nodetype::colidiu(pokeball& _pokeball)
 float Nodetype::get_x() const
 {
 	return _sprite.getPosition().x;
-	//return x;
 }
 
  float Nodetype::get_y() const
 {
 	return _sprite.getPosition().y;
-	// return y;
 }
 
 void Nodetype::set_posicao(float _x, float _y)
@@ -148,24 +128,6 @@ void Nodetype::set_posicao(float _x, float _y)
 	}
 }
 
-void Nodetype::set_origem(float x, float y)
-{
-//	_sprite.setOrigin(x, y);
-}
-
-//void Nodetype::move(float x, float y)
-//{
-//	//_sprite.move(x, y);
-//	// DAR UMA OLHADA
-//}
-
-//sf::Rect<float> Nodetype::get_bounding_rect()
-//{
-//	sf::Vector2f position = _sprite.getPosition();
-//
-//	return sf::Rect<float>(position.x - _sprite.getGlobalBounds().width / 2, position.y - _sprite.getGlobalBounds().height / 2, _sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height);
-//}
-
 Nodetype* Nodetype::get_next() const{
 	return this->next;
 }
@@ -173,12 +135,7 @@ Nodetype* Nodetype::get_next() const{
 void Nodetype::set_next(Nodetype *pnext){
 	this->next = pnext;
 }
-//string Nodetype::get_info() const{
-//	return this->info;
-//}
-//void Nodetype::set_info(string pinfo){
-//	this->info = pinfo;
-//}
+
 int Nodetype::get_id() const{
 	return this->id;
 }
@@ -197,23 +154,12 @@ int Nodetype::get_valor() const
     return this->valor;
 }
 
-void Nodetype::ExibeInformacoes() const{
-	cout << "ID = " << get_id() << endl;
-	//cout << "INFO = " << get_info() << endl;
-	cout << "NEXT = " << get_next() << endl;
-	cout << "VALOR = " << get_valor() << endl;
-}
 
 void Nodetype::CopiaNode(Nodetype *original){
 
 	this->set_next(original->get_next());
-   // cout << endl << endl << "NEXT = " << this->get_next()->get_info() << endl;
 	this->set_id(original->get_id());
-   // cout << "ID = " << this->get_id() << endl;
-//	this->set_info(original->get_info());
-//    //cout << "INFO = " << this->get_info() << endl;
 	this->set_valor(original->get_valor());
-    //cout << "VALOR = " << this->get_valor() << endl;
 }
 
 

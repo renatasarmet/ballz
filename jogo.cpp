@@ -137,11 +137,14 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
 
             verifica_colisao(plano, hook);
             
-            
-            if(pokeball::novaRodada){
+            if(pokeball::novaRodada ){
                 rodadaAtual += 1;
-                //pokebola.aumentaQtdPokebola();
                 pokeball::novaRodada = false;
+                plano->InsereNplano(rodadaAtual);
+            }
+            else if((plano->QuantidadeElementos() == 0) && pokeball::lancado == false ){
+                pokebola.reiniciaRestante();
+                rodadaAtual += 1;
                 plano->InsereNplano(rodadaAtual);
             }
             
@@ -185,7 +188,6 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
 							else{
 								braco::_estado_braco = braco::Pokebola_Lancada;
 								pokeball::dir = (hook->get_rotacao() + 90)*0.0174532925;
-								
 							}
                         }
 						break;
@@ -248,19 +250,19 @@ void jogo::verifica_colisao( Plano* plano, braco* hook)
     {
         if (Paux->colidiu(hook->_pokeball))
         {
-           
-           // pokeball::lancado = false;
+            pokeball::colidiuOvo = true;
             braco::_estado_braco = braco::Acertou;
-            //plano->ProcuraRemove(Paux->get_id(), ok); // NAO VAI SER ASSIM DEPOIS, TEM Q DIMINUIR O VALOR DO OVO
             if(Paux->get_valor()>1){
                 Paux->set_valor(Paux->get_valor()-1);
             }
             else{
-                if (Paux->get_valor() == -1)
+                if (Paux->get_valor() == -1){
                     pokebola.aumentaQtdPokebola();
+                    pokeball::colidiuOvo = false;
+                }
                 plano->ProcuraRemove(Paux->get_id(), ok);
             }
-            pokeball::colidiuOvo = true;
+            
             
         }
         Paux = Paux->get_next();

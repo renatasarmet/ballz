@@ -26,19 +26,21 @@ void pokeball::Update(float elapsedTime, bool colidiuOvo)
     
     if(colidiuOvo == true){
         pokeball::colidiuOvo = false;
-        dir = 360.0f - (dir - 180.0f);
+        dir = 2 * M_PI - dir;
         moveByY = -moveByY;
     }
     
     
     if (lancado && (_sprite.getPosition().x <= 0)){
-        dir = dir + 90.0f;
+        _sprite.setPosition(1,_sprite.getPosition().y);
+       dir = M_PI - dir;
         moveByX = - moveByX;
-        moveByY = - moveByY;
     }
+    
+    
     else if (lancado && (_sprite.getPosition().x >= 440)){
-        dir = dir - 90.0f;
-        moveByY = - moveByY;
+        _sprite.setPosition(439,_sprite.getPosition().y);
+        dir = M_PI - dir;
         moveByX = - moveByX;
     }
 
@@ -51,8 +53,10 @@ void pokeball::Update(float elapsedTime, bool colidiuOvo)
     }
     
     else if (lancado &&(_sprite.getPosition().y >= 580)){
-        dir = 360.0f - (dir - 180.0f);
-        moveByY = -moveByY;
+            _sprite.setPosition(_sprite.getPosition().x, 579);
+            dir = 2 * M_PI - dir;
+            moveByY = -moveByY;
+        
     }
     
     _sprite.move(moveByX, moveByY);

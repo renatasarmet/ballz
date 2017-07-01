@@ -37,7 +37,6 @@ public:
     static void Start(Plano* plano, braco* hook);
     static void CriandoTudo();
     static void JogarNovamente(Plano* plano, braco* hook);
-	static void novo_lancamento();
     
     static int rodadaAtual;
     

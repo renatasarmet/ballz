@@ -7,7 +7,6 @@
 #include <math.h>
 #include "ResourcePath.hpp"
 
-
 using namespace std;
 
 class pokeball
