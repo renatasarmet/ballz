@@ -15,6 +15,7 @@ bool pokeball::novaRodada = false;
 sf::Text Nodetype::valorText;
 int pokeball::qtdRestantePokebola = 1;
 int pokeball::qtdPokebola = 1;
+bool pokeball::colidiuEmCimaOuBaixoOvo = false;
 
 void jogo::Start(Plano* plano, braco* hook)
 {
@@ -259,10 +260,10 @@ void jogo::verifica_colisao( Plano* plano, braco* hook)
                 if (Paux->get_valor() == -1){
                     pokebola.aumentaQtdPokebola();
                     pokeball::colidiuOvo = false;
+                    pokeball::colidiuEmCimaOuBaixoOvo = false;
                 }
                 plano->ProcuraRemove(Paux->get_id(), ok);
             }
-            
             
         }
         Paux = Paux->get_next();

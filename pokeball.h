@@ -47,6 +47,7 @@ public:
 	static bool lancado;
     static bool colidiuOvo;
     static bool novaRodada;
+    static bool colidiuEmCimaOuBaixoOvo;
 
 private:
 	float _velocity;

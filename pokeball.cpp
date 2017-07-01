@@ -6,6 +6,7 @@ pokeball::pokeball() :_velocity(50.f), _elapsedTimeSinceStart(0.0f)
     colidiuOvo = false;
     qtdRestantePokebola = 1;
     qtdPokebola = 1;
+    colidiuEmCimaOuBaixoOvo = false;
 }
 
 pokeball::~pokeball()
@@ -26,8 +27,19 @@ void pokeball::Update(float elapsedTime, bool colidiuOvo)
     
     if(colidiuOvo == true){
         pokeball::colidiuOvo = false;
-        dir = 2 * M_PI - dir;
-        moveByY = -moveByY;
+        if(pokeball::colidiuEmCimaOuBaixoOvo == true){
+            dir = 2 * M_PI - dir;
+            moveByY = -moveByY;
+            pokeball::colidiuEmCimaOuBaixoOvo = false;
+        }
+        else{
+            
+            cout << "TO AQUI DENTRO" << endl;
+            dir = M_PI - dir;
+            moveByX = - moveByX;
+            
+            
+        }
     }
     
     
