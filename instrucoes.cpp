@@ -9,54 +9,48 @@
 #include "instrucoes.h"
 
 Instrucoes::instrucoes_opcoes Instrucoes::Mostrar(sf::RenderWindow& window)
-{
-    //Carrega a imagem do menu de um arquivo
-    sf::Texture imagem;
-    imagem.loadFromFile(resourcePath() + "imagens/instrucoes.jpg");
-    
-    sf::Sprite sprite;
-    sprite.setTexture(imagem);
-    
+{       
     std::string aux2 = std::to_string(get_k());
-    aux2 = resourcePath() + "imagens/tutorial" + aux2 + ".jpg";
+    aux2 =  "imagens/tutorial" + aux2 + ".jpg";
 
     imagem_tutorial.loadFromFile(aux2);
     tutorial.setTexture(imagem_tutorial);
-    tutorial.setOrigin(0, 0);
-    tutorial.setPosition(165, 195);
+
+	sf::Sprite sprite;
+	sprite.setTexture(imagem_tutorial);
     
     //Areas clicaveis
     
     //coordenadas do botao JOGAR
     Item_Instrucoes botao_jogar;
-    botao_jogar.rect.top = 675;
-    botao_jogar.rect.height = 745;
-    botao_jogar.rect.left = 595;
-    botao_jogar.rect.width = 750;
+    botao_jogar.rect.top = 460;
+    botao_jogar.rect.height = 500;
+    botao_jogar.rect.left = 190;
+    botao_jogar.rect.width = 260;
     botao_jogar.action = Jogar;
     
     //coordenadas do botao PROXIMO
     Item_Instrucoes botao_proximo;
-    botao_proximo.rect.top = 595;
-    botao_proximo.rect.height = 630;
-    botao_proximo.rect.left = 710;
-    botao_proximo.rect.width = 815;
+    botao_proximo.rect.top = 430;
+    botao_proximo.rect.height = 460;
+    botao_proximo.rect.left = 330;
+    botao_proximo.rect.width = 435;
     botao_proximo.action = Proximo;
     
     //coordenadas do botao ANTERIOR
     Item_Instrucoes botao_anterior;
-    botao_anterior.rect.top = 600;
-    botao_anterior.rect.height = 630;
-    botao_anterior.rect.left = 200;
-    botao_anterior.rect.width = 300;
+    botao_anterior.rect.top = 430;
+    botao_anterior.rect.height = 460;
+    botao_anterior.rect.left = 6;
+    botao_anterior.rect.width = 120;
     botao_anterior.action = Anterior;
     
     //Coordenadas do botao VOLTAR
     Item_Instrucoes botao_menu;
-    botao_menu.rect.top = 680;
-    botao_menu.rect.height = 750;
-    botao_menu.rect.left = 260;
-    botao_menu.rect.width = 395;
+    botao_menu.rect.top = 515;
+    botao_menu.rect.height = 540;
+    botao_menu.rect.left = 200;
+    botao_menu.rect.width = 250;
     botao_menu.action = Menu;
     
     itens_instrucao.push_back(botao_jogar);
@@ -65,7 +59,6 @@ Instrucoes::instrucoes_opcoes Instrucoes::Mostrar(sf::RenderWindow& window)
 	itens_instrucao.push_back(botao_anterior);
     
     window.draw(sprite);
-    window.draw(tutorial);
     window.display();
     
     return obter_resposta_instrucao(window);
