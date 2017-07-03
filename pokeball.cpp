@@ -32,13 +32,10 @@ void pokeball::Update(float elapsedTime, bool colidiuOvo)
             moveByY = -moveByY;
             pokeball::colidiuEmCimaOuBaixoOvo = false;
         }
-        else{
-            
-            cout << "TO AQUI DENTRO" << endl;
+        else{ // BATEU NA LATERAL
+            cout << " bateu mesmo na lateral " << endl;
             dir = M_PI - dir;
             moveByX = - moveByX;
-            
-            
         }
     }
     

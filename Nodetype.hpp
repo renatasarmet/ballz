@@ -105,11 +105,10 @@ bool Nodetype::colidiu(pokeball& _pokeball)
             
             // TENTATIVA COM Y
             
-            if(_sprite.getPosition().y - _sprite.getLocalBounds().height / 2 >= _pokeball.get_bounding_rect().top + _pokeball.get_bounding_rect().height - 1 || _sprite.getPosition().y + _sprite.getLocalBounds().height / 2 <= _pokeball.get_bounding_rect().top + 1)
+            if(_sprite.getPosition().y - _sprite.getLocalBounds().height / 2 >= _pokeball.get_bounding_rect().top + _pokeball.get_bounding_rect().height - 3 || _sprite.getPosition().y + _sprite.getLocalBounds().height / 2 <= _pokeball.get_bounding_rect().top + 3)
             {
-                
                 pokeball::colidiuEmCimaOuBaixoOvo = true;
-                cout << "colidiu" << endl;
+                cout << " CIMA OU BAIXO " << endl;
             }
             
             

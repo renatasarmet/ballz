@@ -1,9 +1,29 @@
 #include "perdeu.h"
 
-Perdeu::perdeu Perdeu::Mostrar(sf::RenderWindow & renderWindow)
+Perdeu::perdeu Perdeu::Mostrar(sf::RenderWindow & renderWindow, int rodadaAtual)
 {
+   
+    
+    sf::Font fonte;
+    fonte.loadFromFile(resourcePath() + "imagens/pokemon.ttf");
+    
+    //SETANDO OS TEXTOS
+    rodadaAtualText.setFont(fonte);
+    rodadaAtualText.setPosition(350, 280);
+    rodadaAtualText.setCharacterSize(28);
+    rodadaAtualText.setFillColor(sf::Color::Black);
+    rodadaAtualText.setString(to_string(rodadaAtual));
+    
+    
+    EscritoRodadaText.setFont(fonte);
+    EscritoRodadaText.setPosition(300, 240);
+    EscritoRodadaText.setCharacterSize(30);
+    EscritoRodadaText.setFillColor(sf::Color::Black);
+    EscritoRodadaText.setString("Rodadas");
+    
     sf::Texture imagem;
     imagem.loadFromFile(resourcePath() + "imagens/perdeu.jpg");
+    
     
     sf::Sprite sprite;
     sprite.setTexture(imagem);
@@ -28,6 +48,8 @@ Perdeu::perdeu Perdeu::Mostrar(sf::RenderWindow & renderWindow)
     itens_perdeu.push_back(botao_sair);
     
     renderWindow.draw(sprite);
+    renderWindow.draw(rodadaAtualText);
+    renderWindow.draw(EscritoRodadaText);
     renderWindow.display();
     
     return obter_resposta_perdeu(renderWindow);

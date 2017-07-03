@@ -9,15 +9,15 @@
 #include "instrucoes.h"
 
 Instrucoes::instrucoes_opcoes Instrucoes::Mostrar(sf::RenderWindow& window)
-{       
+{
     std::string aux2 = std::to_string(get_k());
-    aux2 =  "imagens/tutorial" + aux2 + ".jpg";
-
+    aux2 =  resourcePath() + "imagens/tutorial" + aux2 + ".jpg";
+    
     imagem_tutorial.loadFromFile(aux2);
     tutorial.setTexture(imagem_tutorial);
-
-	sf::Sprite sprite;
-	sprite.setTexture(imagem_tutorial);
+    
+    sf::Sprite sprite;
+    sprite.setTexture(imagem_tutorial);
     
     //Areas clicaveis
     
@@ -55,8 +55,8 @@ Instrucoes::instrucoes_opcoes Instrucoes::Mostrar(sf::RenderWindow& window)
     
     itens_instrucao.push_back(botao_jogar);
     itens_instrucao.push_back(botao_menu);
-	itens_instrucao.push_back(botao_proximo);
-	itens_instrucao.push_back(botao_anterior);
+    itens_instrucao.push_back(botao_proximo);
+    itens_instrucao.push_back(botao_anterior);
     
     window.draw(sprite);
     window.display();

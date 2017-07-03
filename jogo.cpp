@@ -227,7 +227,7 @@ void jogo::mostrar_ganhou(Plano* plano, braco* hook)
 void jogo::mostrar_perdeu(Plano* plano, braco* hook)
 {
     Perdeu perdeu;
-    Perdeu::perdeu resultado = perdeu.Mostrar(janela);
+    Perdeu::perdeu resultado = perdeu.Mostrar(janela, rodadaAtual);
     switch (resultado)
     {
         case Perdeu::Sair:

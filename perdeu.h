@@ -15,7 +15,7 @@ class Perdeu
 public:
     enum perdeu { Nada, Sair, Jogar_Novamente };
     
-    perdeu Mostrar(sf::RenderWindow& window);
+    perdeu Mostrar(sf::RenderWindow& window, int rodadaAtual);
     
     struct item_perdeu
     {
@@ -27,6 +27,8 @@ public:
 private:
     perdeu obter_resposta_perdeu(sf::RenderWindow& window);
     perdeu clique(int x, int y);
+    sf::Text rodadaAtualText;
+    sf::Text EscritoRodadaText;
     std::list<item_perdeu> itens_perdeu;
 };
 #endif // !perdeu_h
