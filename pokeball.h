@@ -34,10 +34,6 @@ public:
     int get_qtdRestantePokebola() const;
     int get_qtdPokebola() const;
 
-    
-    
-    void colidiuComOvo(float elapsedTime); //muda a direcao após colisao
-
 	virtual sf::Rect<float> get_bounding_rect();
 
 	virtual float get_x();

@@ -44,7 +44,6 @@ void jogo::Start(Plano* plano, braco* hook)
     // Inicializando o plano
     plano->InsereNplano(rodadaAtual);
     
-    //estado_jogo = jogo::Jogando;
 
     while (!IsExiting())
     {
@@ -56,7 +55,7 @@ void jogo::Start(Plano* plano, braco* hook)
 
 void jogo::CriandoTudo()
 {
-	janela.create(sf::VideoMode(450, 600), "PokeBallz", sf::Style::Close); //DEFINE TAMANHO DA JANELA, O QUE APARECE NO CABEÇALHO E FUNCOES DISPONIVEIS (FECHAR, RESIZE, MINIMIZAR)
+	janela.create(sf::VideoMode(450, 600), "PokeBallz", sf::Style::Close); //DEFINE TAMANHO DA JANELA, O QUE APARECE NO CABECALHO E FUNCOES DISPONIVEIS (FECHAR, RESIZE, MINIMIZAR)
    
     Plano plano;
 	braco hook;
@@ -318,10 +317,6 @@ void jogo::mostrar_instrucao()
         }
     }
 }
-
-
-
-
 
 
 int main(int argc, char** argv)
