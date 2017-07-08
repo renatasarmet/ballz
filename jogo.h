@@ -17,7 +17,6 @@
 
 #include "menu.h"
 #include "tela_inicial.h"
-#include "ganhou.h"
 #include "perdeu.h"
 #include "braco.h"
 #include "pokeball.h"
@@ -25,8 +24,6 @@
 #include "Nodetype.hpp"
 #include "Plano.hpp"
 #include "instrucoes.h"
-
-#include "ResourcePath.hpp"
  
 
 using namespace std;
@@ -47,13 +44,12 @@ private:
     static void mostrar_tela_inicial();
     static void mostrar_menu();
 	static void mostrar_instrucao();
-    static void mostrar_ganhou( Plano* plano, braco* hook);
     static void mostrar_perdeu( Plano* plano, braco* hook);
   
     static void verifica_colisao(Plano* plano, braco* hook);
     
     enum GameState {
-        Inicializado, Mostrando_Tela_Inicial, Pausado, Mostrando_Menu, Jogando, Saindo, Ganhando, Perdendo, Mostrando_Instrucao, Mostrando_Transicao_Passou, Mostrando_Transicao_Horcrux, Nova_Fase, Fase_Final
+        Inicializado, Mostrando_Tela_Inicial, Pausado, Mostrando_Menu, Jogando, Saindo, Perdendo, Mostrando_Instrucao, Mostrando_Transicao_Passou, Mostrando_Transicao_Horcrux, Nova_Fase, Fase_Final
     }; // estado que o jogo pode estar durante a partida
     
     static GameState estado_jogo;

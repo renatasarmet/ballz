@@ -26,7 +26,7 @@ void braco::update_todos()
 
 void braco::desenhar(sf::RenderWindow& renderWindow)
 {
-	_imagem.loadFromFile(resourcePath() + "imagens/braco.png");
+	_imagem.loadFromFile("imagens/braco.png");
 	_sprite.setTexture(_imagem);
 	_sprite.setPosition(225, 50);
 	_sprite.setOrigin(8, 2);

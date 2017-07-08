@@ -5,7 +5,7 @@ Perdeu::perdeu Perdeu::Mostrar(sf::RenderWindow & renderWindow, int rodadaAtual)
    
     
     sf::Font fonte;
-    fonte.loadFromFile(resourcePath() + "imagens/pokemon.ttf");
+    fonte.loadFromFile("imagens/pokemon.ttf");
     
     //SETANDO OS TEXTOS
     rodadaAtualText.setFont(fonte);
@@ -22,7 +22,7 @@ Perdeu::perdeu Perdeu::Mostrar(sf::RenderWindow & renderWindow, int rodadaAtual)
     EscritoRodadaText.setString("Rodadas");
     
     sf::Texture imagem;
-    imagem.loadFromFile(resourcePath() + "imagens/perdeu.jpg");
+    imagem.loadFromFile("imagens/perdeu.jpg");
     
     
     sf::Sprite sprite;

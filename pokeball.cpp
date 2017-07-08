@@ -33,7 +33,6 @@ void pokeball::Update(float elapsedTime, bool colidiuOvo)
             pokeball::colidiuEmCimaOuBaixoOvo = false;
         }
         else{ // BATEU NA LATERAL
-            cout << " bateu mesmo na lateral " << endl;
             dir = M_PI - dir;
             moveByX = - moveByX;
         }
@@ -75,7 +74,7 @@ void pokeball::pokebola()
 {
 	if (existe_pokeball)
 	{
-		_imagem.loadFromFile(resourcePath() + "imagens/pokebola.png");
+		_imagem.loadFromFile("imagens/pokebola.png");
 		_sprite.setTexture(_imagem);
 		_sprite.setPosition(10 * cos(dir) + 225, 10 * sin(dir) + 50);
 	}

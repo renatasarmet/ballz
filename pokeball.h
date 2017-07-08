@@ -5,7 +5,6 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <math.h>
-#include "ResourcePath.hpp"
 
 using namespace std;
 

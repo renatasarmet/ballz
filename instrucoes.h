@@ -7,7 +7,6 @@
 
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
-#include "ResourcePath.hpp"
  
 #include <list>
 

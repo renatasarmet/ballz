@@ -6,7 +6,6 @@
 #include <iostream>
 
 #include "pokeball.h"
-#include "ResourcePath.hpp"
 
 using namespace std;
 

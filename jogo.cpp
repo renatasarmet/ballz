@@ -20,7 +20,7 @@ bool pokeball::colidiuEmCimaOuBaixoOvo = false;
 void jogo::Start(Plano* plano, braco* hook)
 {
     sf::Texture imagem;
-    imagem.loadFromFile(resourcePath() + "imagens/fundo.jpg");
+    imagem.loadFromFile("imagens/fundo.jpg");
     background.setTexture(imagem); //DEFINE O BACKGROUND
     
     //Resetando as listas
@@ -62,7 +62,7 @@ void jogo::CriandoTudo()
     
     //LOAD FONT E SETA
     sf::Font fonte;
-    fonte.loadFromFile(resourcePath() + "imagens/pokemon1.ttf");
+    fonte.loadFromFile("imagens/pokemon1.ttf");
     
     //SETANDO OS TEXTOS
     nivelText.setFont(fonte);
@@ -115,11 +115,6 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
             mostrar_instrucao();
             break;
         }
-        case jogo::Ganhando:
-        {
-            mostrar_ganhou(plano, hook);
-            break;
-        }
         case jogo::Perdendo:
         {
             mostrar_perdeu(plano, hook);
@@ -131,7 +126,7 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
             sf::Sprite botao_pausar;
             sf::Texture imagem1;
             
-            imagem1.loadFromFile(resourcePath() + "imagens/pausar.png");
+            imagem1.loadFromFile("imagens/pausar.png");
             botao_pausar.setTexture(imagem1);
             botao_pausar.setPosition(335, 3);
 
@@ -208,20 +203,6 @@ void jogo::mostrar_tela_inicial()
     estado_jogo = jogo::Mostrando_Menu;
 }
 
-void jogo::mostrar_ganhou(Plano* plano, braco* hook)
-{
-    Ganhou ganhou;
-    Ganhou::ganhou resultado = ganhou.Mostrar(janela);
-    switch (resultado)
-    {
-        case Ganhou::Sair:
-            estado_jogo = jogo::Saindo;
-            break;
-        case Ganhou::Jogar_Novamente:
-            jogo::JogarNovamente(plano, hook);
-            break;
-    }
-}
 
 void jogo::mostrar_perdeu(Plano* plano, braco* hook)
 {

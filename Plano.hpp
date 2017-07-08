@@ -6,7 +6,6 @@
 #include "Nodetype.hpp"
 #include <time.h>
 #include <ctime>
-#include "ResourcePath.hpp"
 #define TAMANHO 8
 #define LIMITE_PLANO 60
 
@@ -72,10 +71,9 @@ void Plano::InsereNplano(int rodadaAtual)
             if(entraOuNao==1){
                 r = (rand() % 2 + 1);
                 valor = rodadaAtual*r; // valor a ser inserido
-                //valor = 1;
                 quantidadeJaInseridaID +=1;
                 no = new Nodetype();
-                no->carregar(resourcePath() + "imagens/ovo.png");
+                no->carregar("imagens/ovo.png");
                 no->set_id(quantidadeJaInseridaID);
                 no->set_valor(valor);
                 no->valorText.setString(to_string(no->get_valor()));
@@ -98,7 +96,7 @@ void Plano::InsereNplano(int rodadaAtual)
                     valor = -1;
                     quantidadeJaInseridaID +=1;
                     no = new Nodetype();
-                    no->carregar(resourcePath() + "imagens/pokebola.png");
+                    no->carregar("imagens/pokebola.png");
                     no->set_id(quantidadeJaInseridaID);
                     no->set_valor(valor);
                     no->valorText.setString("");

@@ -58,7 +58,7 @@ Nodetype::Nodetype(){
     
     
     //LOAD FONT AND TEXT
-    fonte.loadFromFile(resourcePath() + "imagens/pokemon.ttf");
+    fonte.loadFromFile("imagens/pokemon.ttf");
     valorText.setCharacterSize(25);
     valorText.setFillColor(sf::Color::Black);
     valorText.setFont(fonte);
@@ -102,30 +102,10 @@ bool Nodetype::colidiu(pokeball& _pokeball)
         if(_sprite.getPosition().x - _sprite.getLocalBounds().width/2 <= _pokeball.get_bounding_rect().left + _pokeball.get_bounding_rect().width && _sprite.getPosition().x + _sprite.getLocalBounds().width / 2  >= _pokeball.get_bounding_rect().left && _sprite.getPosition().y - _sprite.getLocalBounds().height / 2 <= _pokeball.get_bounding_rect().top + _pokeball.get_bounding_rect().height && _sprite.getPosition().y + _sprite.getLocalBounds().height / 2 >= _pokeball.get_bounding_rect().top )
         {
             
-            
-            // TENTATIVA COM Y
-            
-            if(_sprite.getPosition().y - _sprite.getLocalBounds().height / 2 >= _pokeball.get_bounding_rect().top + _pokeball.get_bounding_rect().height - 3 || _sprite.getPosition().y + _sprite.getLocalBounds().height / 2 <= _pokeball.get_bounding_rect().top + 3)
+            if(_sprite.getPosition().y - _sprite.getLocalBounds().height / 2 >= _pokeball.get_bounding_rect().top + _pokeball.get_bounding_rect().height - 1 || _sprite.getPosition().y + _sprite.getLocalBounds().height / 2 <= _pokeball.get_bounding_rect().top + 1)
             {
                 pokeball::colidiuEmCimaOuBaixoOvo = true;
-                cout << " CIMA OU BAIXO " << endl;
             }
-            
-            
-            
-            // TENTATIVA COM X
-//            
-//            if(_sprite.getPosition().x + _sprite.getLocalBounds().width / 2 <= _pokeball.get_bounding_rect().left + 3 || _sprite.getPosition().x - _sprite.getLocalBounds().width / 2 >= _pokeball.get_bounding_rect().left + _pokeball.get_bounding_rect().width - 3)
-//            {
-//                pokeball::colidiuEmCimaOuBaixoOvo = false;
-//            }
-//            else{
-//                cout << "colidiu em cima ou baixo" << endl;
-//
-//                pokeball::colidiuEmCimaOuBaixoOvo = true;
-//            }
-            
-            
             
             return true;
         }
