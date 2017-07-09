@@ -5,7 +5,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <list>
-#include "ResourcePath.hpp"
  
 
 using namespace std;
