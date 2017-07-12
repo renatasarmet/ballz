@@ -1,12 +1,15 @@
 #include "jogo.h"
 //Linha referente para remover o cmd no windows.
-#include <windows.h>
+//#include <windows.h>
 
 jogo::GameState jogo::estado_jogo = Inicializado;
 sf::RenderWindow jogo::janela;
 sf::Text jogo::nivelText;
 sf::Text jogo::pokebolaText;
 sf::Sprite jogo::background;
+sf::Music jogo::musica_jogo;
+sf::Music jogo::musica_menu;
+sf::Music jogo::musica_instrucoes;
 bool pokeball::lancado = false;
 braco::estado_braco braco::_estado_braco = Rotacionando;
 double pokeball::dir = 0;
@@ -18,6 +21,7 @@ sf::Text Nodetype::valorText;
 int pokeball::qtdRestantePokebola = 1;
 int pokeball::qtdPokebola = 1;
 bool pokeball::colidiuEmCimaOuBaixoOvo = false;
+int jogo::entrou_jogando = 0;
 
 void jogo::Start(Plano* plano, braco* hook)
 {
@@ -42,10 +46,9 @@ void jogo::Start(Plano* plano, braco* hook)
     
     //Setando pokeball para nao lancado
     pokeball::lancado = false;
-    
+
     // Inicializando o plano
     plano->InsereNplano(rodadaAtual);
-    
 
     while (!IsExiting())
     {
@@ -61,7 +64,15 @@ void jogo::CriandoTudo()
    
     Plano plano;
 	braco hook;
-    
+
+	//LOADANDO AS MUSICAS
+	musica_jogo.setLoop(true);
+	musica_jogo.openFromFile("sons/pokemon.ogg");
+	musica_instrucoes.setLoop(true);
+	musica_instrucoes.openFromFile("sons/pokemon1.ogg");
+	musica_menu.setLoop(true);
+	musica_menu.openFromFile("sons/pokemon2.ogg");
+
     //LOAD FONT E SETA
     sf::Font fonte;
     fonte.loadFromFile("imagens/pokemon1.ttf");
@@ -87,6 +98,7 @@ void jogo::CriandoTudo()
 void jogo::JogarNovamente(Plano* plano, braco* hook)
 {
 	jogo::Start(plano, hook);
+	entrou_jogando = 1;
     estado_jogo = jogo::Jogando;
 }
                                     
@@ -126,8 +138,14 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
         {
             sf::Event evento_atual;
             sf::Sprite botao_pausar;
-            sf::Texture imagem1;
-            
+			sf::Texture imagem1;
+			
+			if (entrou_jogando == 1)
+			{
+				entrou_jogando = 2;
+				musica_jogo.play();
+			}
+
             imagem1.loadFromFile("imagens/pausar.png");
             botao_pausar.setTexture(imagem1);
             botao_pausar.setPosition(335, 3);
@@ -171,14 +189,18 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
                         estado_jogo = jogo::Saindo;
                         break;
                     case sf::Event::KeyPressed:
-                        if (evento_atual.key.code == sf::Keyboard::Escape)
+						if (evento_atual.key.code == sf::Keyboard::Escape)
+						{
+							musica_jogo.pause();
 							estado_jogo = jogo::Mostrando_Menu;
+						}
                         break;
                     case sf::Event::MouseButtonPressed:
                         if (evento_atual.mouseButton.button == sf::Mouse::Left && pokeball::lancado == false)
                         {
                             if (botao_pausar.getGlobalBounds().contains(sf::Mouse::getPosition(janela).x, sf::Mouse::getPosition(janela).y))
                             {                                
+								musica_jogo.pause();
 								estado_jogo = jogo::Mostrando_Menu;
                             }
 
@@ -201,10 +223,11 @@ void jogo::loop_jogo( Plano* plano, braco* hook)
 void jogo::mostrar_tela_inicial()
 {
     Tela_Inicial tela_incial;
-    tela_incial.Mostrar(janela);
-    estado_jogo = jogo::Mostrando_Menu;
-}
 
+	estado_jogo = jogo::Mostrando_Menu;
+
+    tela_incial.Mostrar(janela);
+}
 
 void jogo::mostrar_perdeu(Plano* plano, braco* hook)
 {
@@ -216,12 +239,12 @@ void jogo::mostrar_perdeu(Plano* plano, braco* hook)
             estado_jogo = jogo::Saindo;
             break;
         case Perdeu::Jogar_Novamente:
+			entrou_jogando = 1;
             estado_jogo = jogo::Jogando;
             jogo::JogarNovamente(plano, hook);
             break;
     }
 }
-
 
 void jogo::verifica_colisao( Plano* plano, braco* hook)
 {
@@ -255,16 +278,23 @@ void jogo::verifica_colisao( Plano* plano, braco* hook)
 void jogo::mostrar_menu()
 {
     Menu menu;
+
+	musica_menu.play();
+
     Menu::menu_inicial resultado = menu.Mostrar(janela);
+
     switch (resultado)
     {
         case Menu::Sair:
             estado_jogo = jogo::Saindo;
             break;
         case Menu::Jogar:
+			entrou_jogando = 1;
+			musica_menu.pause();
             estado_jogo = jogo::Jogando;
             break;
         case Menu::Instrucoes:
+			musica_menu.pause();
             estado_jogo = jogo::Mostrando_Instrucao;
             break;
     }
@@ -273,6 +303,9 @@ void jogo::mostrar_menu()
 void jogo::mostrar_instrucao()
 {
     Instrucoes instrucao;
+	
+	musica_instrucoes.play();
+
     instrucao.set_k(1);
     int continua = 1;
     while (continua == 1) {
@@ -280,10 +313,13 @@ void jogo::mostrar_instrucao()
         switch (resultado)
         {
             case Instrucoes::Menu:
+				musica_instrucoes.pause();
                 estado_jogo = jogo::Mostrando_Menu;
                 continua = 0;
                 break;
             case Instrucoes::Jogar:
+				entrou_jogando = 1;
+				musica_instrucoes.pause();
                 estado_jogo = jogo::Jogando;
                 continua = 0;
                 break;
@@ -301,12 +337,11 @@ void jogo::mostrar_instrucao()
     }
 }
 
-
 int main(int argc, char** argv)
 {
 	//Linhas referentes para remover o cmd no windows.
-	HWND hWnd = GetConsoleWindow();
-	ShowWindow( hWnd, SW_HIDE );
+	//HWND hWnd = GetConsoleWindow();
+	//ShowWindow( hWnd, SW_HIDE );
     jogo::CriandoTudo();
     
     return 0;

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <time.h>
 #include <ctime>
@@ -55,10 +56,13 @@ private:
     static GameState estado_jogo;
     static sf::RenderWindow janela;
     static sf::Sprite background;
+	static sf::Music musica_jogo;
+	static sf::Music musica_instrucoes;
+	static sf::Music musica_menu;
     static sf::Text nivelText;
     static sf::Text pokebolaText;
 	static pokeball pokebola;
-
+	static int entrou_jogando;
 
 };
 #endif // !JOGO_H
