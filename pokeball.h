@@ -4,7 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
-#include <math.h>
+#define _USE_MATH_DEFINES
+#include <math.h> 
+
 
 using namespace std;
 
@@ -21,9 +23,6 @@ public:
 	virtual void set_estado();
 	virtual void set_estado_false();
 	virtual bool verifica_estado();
-    void set_id(int id);
-    int get_id() const;
-    
     
     static bool diminuiRestante();
     static void aumentaQtdPokebola();

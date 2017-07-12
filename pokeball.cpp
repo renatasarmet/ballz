@@ -124,7 +124,6 @@ float pokeball::get_y()
 	return _sprite.getPosition().y;
 }
 
-
 bool pokeball::diminuiRestante(){
     qtdRestantePokebola -= 1;
     if(qtdRestantePokebola > 0)
@@ -135,7 +134,6 @@ bool pokeball::diminuiRestante(){
         return false;
     }
 }
-
 
 void pokeball::aumentaQtdPokebola(){
     qtdPokebola += 1;

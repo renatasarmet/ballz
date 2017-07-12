@@ -2,7 +2,7 @@
 
 braco::braco() : _velocity(20.f), _elapsedTimeSinceStart(0.0f)
 {
-	direcao_rotacao = 0.5;
+	direcao_rotacao = 0.25;
 }
 
 braco::~braco()
