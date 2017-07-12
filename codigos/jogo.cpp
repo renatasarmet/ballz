@@ -1,6 +1,6 @@
 #include "jogo.h"
 //Linha referente para remover o cmd no windows.
-//#include <windows.h>
+#include <windows.h>
 
 jogo::GameState jogo::estado_jogo = Inicializado;
 sf::RenderWindow jogo::janela;
@@ -340,8 +340,8 @@ void jogo::mostrar_instrucao()
 int main(int argc, char** argv)
 {
 	//Linhas referentes para remover o cmd no windows.
-	//HWND hWnd = GetConsoleWindow();
-	//ShowWindow( hWnd, SW_HIDE );
+	HWND hWnd = GetConsoleWindow();
+	ShowWindow( hWnd, SW_HIDE );
     jogo::CriandoTudo();
     
     return 0;
